@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\HubungiKami;
 use App\Models\Kelas;
 use App\Models\Pelajaran;
 use App\Models\Siswa;
@@ -53,4 +54,13 @@ class DashboardController extends Controller
             'perPerempuan2',
         ]));
     }
+
+    public function message()
+    {
+        $saran = HubungiKami::where('jenis', 'saran')->get();
+        $masukan = HubungiKami::where('jenis', 'masukan')->get();
+        return view('home.message', compact('saran', 'masukan'));
+    }
+
+
 }

@@ -34,7 +34,7 @@ class UserController extends Controller
                 'role' => $request->role,
                 'password' => Hash::make($request->password)
             ]);
-            return redirect('/show-siswa');
+            return redirect('/show-siswa')->with('success', 'Siswa telah ditambahkan');
     }
 
     public function editSiswa($id){
@@ -56,7 +56,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('show-siswa');
+        return redirect('show-siswa')->with('success', 'Siswa telah diupdate');
     }
 
 
@@ -83,7 +83,7 @@ class UserController extends Controller
                 'role' => $request->role,
                 'password' => Hash::make($request->password)
             ]);
-            return redirect('/show-guru');
+            return redirect('/show-guru')->with('success', 'Guru telah ditambahkan');
     }
 
 
@@ -106,7 +106,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('show-guru');
+        return redirect('show-guru')->with('success', 'Guru telah diupdate');
     }
 
     // function for all
@@ -115,9 +115,9 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
         $user->delete();
         if($user->role == "Guru"){
-            return redirect('show-guru');
+            return redirect('show-guru')->with('success', 'Guru telah dihapus');
         }else{
-            return redirect('show-siswa');
+            return redirect('show-siswa')->with('success', 'Guru telah dihapus');
         }
     }
 
@@ -146,7 +146,7 @@ class UserController extends Controller
             'password' => Hash::make(Auth::user()->password),
         ]);
 
-        return redirect("show-profile");
+        return redirect("show-profile")->with('success', 'Profile telah diupdate');
     }
 
     public function updatePassword(Request $request){
@@ -163,6 +163,6 @@ class UserController extends Controller
         ]);
 
 
-        return redirect("show-profile");
+        return redirect("show-profile")->with('success', 'Password telah diupdate');
     }
 }

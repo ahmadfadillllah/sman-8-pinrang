@@ -56,7 +56,7 @@ class DataController extends Controller
         ]);
 
 
-        return redirect('show-data-siswa');
+        return redirect('show-data-siswa')->with('Siswa telah ditambahkan');
     }
 
     public function editSiswa($id){
@@ -87,7 +87,7 @@ class DataController extends Controller
             'tgl_lahir' => $request->tgl_lahir,
         ]);
 
-        return redirect(route('show-data-siswa'));
+        return redirect(route('show-data-siswa'))->with('Siswa telah diupdate');
     }
 
     // Controller for guru
@@ -132,7 +132,7 @@ class DataController extends Controller
             'alamat' => $request->alamat,
         ]);
 
-        return redirect('show-data-guru');
+        return redirect('show-data-guru')->with('Guru telah ditambahkan');
     }
 
     public function editGuru($id){
@@ -162,14 +162,14 @@ class DataController extends Controller
             'alamat' => $request->alamat,
         ]);
 
-        return redirect(route('show-data-guru'));
+        return redirect(route('show-data-guru'))->with('Guru telah diupdate');
     }
 
     public function destroySiswa($id){
         $siswa = Siswa::where('id', $id)->first();
         $siswa->delete();
 
-        return redirect(route('show-data-siswa'));
+        return redirect(route('show-data-siswa'))->with('Siswa telah dihapus');
 
     }
 
@@ -177,7 +177,7 @@ class DataController extends Controller
         $guru = Guru::where('id', $id)->first();
         $guru->delete();
 
-        return redirect(route('show-data-guru'));
+        return redirect(route('show-data-guru'))->with('Guru telah dihapus');
 
     }
 

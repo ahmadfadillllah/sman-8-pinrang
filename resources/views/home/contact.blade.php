@@ -33,9 +33,11 @@
 
     <!-- ====== global style ====== -->
     <link rel="stylesheet" href="{{ asset('iteck') }}/assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+
 
     <!-- ====== start loading page ====== -->
     <!-- <div id="preloader">
@@ -43,10 +45,11 @@
     <!-- ---------- loader ---------- -->
     <div id="preloader">
         <div id="loading-wrapper" class="show">
-            <div id="loading-text"> <img src="{{ asset('iteck') }}/assets/img/logo_loading.png" alt=""> </div>
+            {{-- <div id="loading-text"> <img src="{{ asset('iteck') }}/assets/img/logo_loading.png" alt=""> </div> --}}
             <div id="loading-content"></div>
         </div>
     </div>
+
     <!-- ====== end loading page ====== -->
 
     <!-- ====== start navbar ====== -->
@@ -89,6 +92,7 @@
 
     <!--Contents-->
     <main class="contact-page style-5">
+        @include('notif.index')
         <!-- ====== start contact page ====== -->
         <section class="contact section-padding pt-50 style-6">
             <div class="container">
@@ -99,12 +103,13 @@
                 <div class="content">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
-                            <form action="https://iteck-html.themescamp.com/contact.php" class="form" method="post">
+                            <form action="{{ route('home.contact.post') }}" class="form" method="post">
+                                @csrf
                                 <p class="text-center text-danger fs-12px mb-30">The field is required mark as *</p>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group mb-20">
-                                            <input type="text" name="name" class="form-control" placeholder="Name">
+                                            <input type="text" name="name" class="form-control" placeholder="Name" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -119,21 +124,21 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-20">
-                                            <input type="text" name="website" class="form-control" placeholder="Your Website (option)">
+                                            <input type="text" name="web" class="form-control" placeholder="Your Website (option)">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group mb-20">
-                                            <select name="option" class="form-select">
+                                            <select name="jenis" class="form-select">
                                                 <option value="how can we help" selected>How can we help you?</option>
-                                                <option value="Saran">Saran</option>
-                                                <option value="Masukan">Masukan</option>
+                                                <option value="saran">Saran</option>
+                                                <option value="masukan">Masukan</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <textarea rows="10" name="message" class="form-control" placeholder="How can we help you?"></textarea>
+                                            <textarea rows="10" name="pesan" class="form-control" placeholder="How can we help you?" required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 text-center">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('notif.index')
 <section id="page-account-settings">
     <div class="row">
       <!-- left menu section -->
@@ -41,6 +42,7 @@
         <div class="card">
           <div class="card-body">
             <div class="tab-content">
+
               <!-- general tab -->
               <div
                 role="tabpanel"

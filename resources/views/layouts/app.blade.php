@@ -74,7 +74,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href={{ asset('assets/css/style.css') }}>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .dropbtn {
             background-color: #3498DB;
@@ -395,7 +395,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 class="user-name fw-bolder">{{ $user->name }}</span><span
                                 class="user-status">{{ $user->role }}</span></div><span
                             class="avatar bg-light-primary">
-                            <div class="avatar-content">{{ $avatar }}</div>
+                            <div class="avatar-content"><img src="{{asset('app-assets/images/illustrator/person.png')}}" alt=""></div>
+                            {{-- <div class="avatar-content">{{ $avatar }}</div> --}}
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user"><a
@@ -453,7 +454,19 @@ $avatar = substr(Auth::user()->name, 0, 2);
                     @endif
                 </li>
                 @if (Auth::user()->role == 'Admin')
-
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                    data-feather="message-square"></i><span class="menu-title text-truncate"
+                    data-i18n="User">Hubungi Kami</span></a>
+                    <ul class="menu-content">
+                        <li ><a
+                                class="d-flex align-items-center" href="{{ route('dashboard.message') }}"><i
+                                    data-feather="circle"></i><span class="menu-item text-truncate"
+                                    data-i18n="List">Lihat Pesan</span></a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @if (Auth::user()->role == 'Admin')
                     <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">User Management</span><i
                             data-feather="more-horizontal"></i>
                     </li>

@@ -31,6 +31,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
+Route::post('/contact/post',[HomeController::class, 'contactpost'])->name('home.contact.post');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/user-home', function () {
@@ -70,6 +71,8 @@ Route::middleware(['auth'])->group(function(){
 
         Route::middleware(['admin'])->group(function(){
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+            Route::get('/show-message', [DashboardController::class, 'message'])->name('dashboard.message');
 
             Route::get('/show-siswa',[UserController::class, 'showSiswa'])->name('show-siswa');
             Route::post('/show-siswa', [UserController::class, 'storeSiswa']);

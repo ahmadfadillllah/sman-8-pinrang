@@ -2,6 +2,12 @@
 
 
 @section('content')
+@include('notif.index')
+@error('kelas')
+    <div class="text-danger mt-1">
+        {{ $message }}
+    </div>
+@enderror
     <section class="app-user-list">
         <div class="row" id="basic-table">
             <div class="col-12">
@@ -33,12 +39,6 @@
                                                     <input type="text" name="kelas" placeholder="Masukkan Kelas"
                                                         class="form-control" />
                                                 </div>
-                                                @error('kelas')
-                                                    <div class="text-danger mt-1">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Daftar</button>

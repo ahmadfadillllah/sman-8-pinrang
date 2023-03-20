@@ -21,13 +21,13 @@ class KelasController extends Controller
             'kelas' => $request->kelas
         ]);
 
-        return redirect('show-kelas');
+        return redirect('show-kelas')->with('success', 'Kelas telah ditambahkan');
     }
 
     public function destroy($id){
         $kelas = Kelas::where('id', $id)->first();
         $kelas->delete();
 
-        return redirect('show-kelas');
+        return redirect('show-kelas')->with('success', 'Kelas telah dihapus');
     }
 }

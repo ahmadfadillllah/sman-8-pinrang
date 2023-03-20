@@ -5,6 +5,7 @@
 @endphp
 
 @section('content')
+@include('notif.index')
     <section class="app-user-list">
 
         <form class="faq-search-input row mb-3" action="{{ route('show-data-guru') }} " method="get">
