@@ -12,6 +12,7 @@ use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\UjianContoller;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Models\AbsensiSiswa;
 use App\Models\Pelajaran;
@@ -28,9 +29,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('home.home');
-})->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/user-home', function () {

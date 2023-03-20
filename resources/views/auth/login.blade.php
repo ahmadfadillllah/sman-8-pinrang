@@ -13,14 +13,14 @@
                         <!-- Brand logo-->
                         <a class="brand-logo" href="#">
                             <img src="{{ asset('app-assets/images/logo/logo.png') }}" width="35rem" alt="">
-                            <h2 class="brand-text text-primary ms-1">SD INPRES CAMBAYA IV</h2>
+                            <h2 class="brand-text text-primary ms-1">{{ config('app.name') }}</h2>
                         </a>
                         <!-- /Brand logo-->
                         <!-- Left Text-->
-                        <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
+                        <div class="d-none d-lg-flex col-lg-6 align-items-center p-5">
                             <div class="w-100 d-lg-flex align-items-center justify-content-center px-5"><img
                                     class="img-fluid"
-                                    src={{ asset('app-assets/images/illustrator/teaching_illustrator.svg') }}
+                                    src={{ asset('app-assets/images/illustrator/math.svg') }}
                                     alt="Register V2" /></div>
                         </div>
                         <!-- /Left Text-->
@@ -30,16 +30,16 @@
                                 <h2 class="card-title fw-bold mb-1">Silahkan Masuk!</h2>
                                 <form class="auth-register-form mt-2" action="{{ route('login') }}" method="POST">
                                     @csrf
-
+                                    @error('email')
+                                    <div class="text-danger mt-1">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                     <div class="mb-1">
                                         <label class="form-label" for="email">Email</label>
                                         <input class="form-control" id="email" type="text" name="email"
                                             placeholder="asep@example.com" aria-describedby="email" tabindex="2" value="{{old('email')}}"/>
-                                        @error('email')
-                                            <div class="text-danger mt-1">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="password">Password</label>

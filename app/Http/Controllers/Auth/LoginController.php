@@ -33,7 +33,7 @@ class LoginController extends Controller
 
 
         throw ValidationException::withMessages([
-            'email' => 'Email yang anda masukkan salah'
+            'email' => 'Email/password salah'
         ]);
     }
 }
