@@ -28,7 +28,7 @@ class LoginController extends Controller
 
 
         if(Auth::attempt($attributes)){
-                return redirect('/user-home');
+                return redirect('/dashboard');
         }
 
 

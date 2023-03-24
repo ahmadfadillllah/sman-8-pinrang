@@ -30,7 +30,19 @@
               aria-expanded="false"
             >
               <i data-feather="lock" class="font-medium-3 me-1"></i>
-              <span class="fw-bold">Change Password</span>
+              <span class="fw-bold">Ganti Password</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="account-pill-avatar"
+              data-bs-toggle="pill"
+              href="#account-vertical-avatar"
+              aria-expanded="false"
+            >
+              <i data-feather="users" class="font-medium-3 me-1"></i>
+              <span class="fw-bold">Ganti Avatar</span>
             </a>
           </li>
         </ul>
@@ -166,6 +178,44 @@
                 <!--/ form -->
               </div>
               <!--/ change password -->
+              <div
+                role="tabpanel"
+                class="tab-pane"
+                id="account-vertical-avatar"
+                aria-labelledby="account-pill-avatar"
+                aria-expanded="true"
+              >
+                <!-- form -->
+                <form class="validate-form mt-2" action="{{route('edit-avatar')}}" method="POST" enctype="multipart/form-data">
+                    @method('put')
+                    @csrf
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div class="mb-1">
+                        <label class="form-label" for="account-name">Avatar</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="account-name"
+                          name="avatar"
+                          placeholder="Avatar"
+                          value="{{$user->name}}"
+                        />
+                        @error('name')
+                                      <div class="text-danger mt-1">
+                                          {{ $message }}
+                                      </div>
+                                  @enderror
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary mt-2 me-1">Save changes</button>
+                      <button type="reset" class="btn btn-outline-secondary mt-2">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+                <!--/ form -->
+              </div>
             </div>
           </div>
         </div>

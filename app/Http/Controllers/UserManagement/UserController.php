@@ -32,7 +32,8 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'avatar' => 'user.png',
             ]);
             return redirect('/show-siswa')->with('success', 'Siswa telah ditambahkan');
     }
@@ -81,7 +82,8 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'avatar' => 'user.png',
             ]);
             return redirect('/show-guru')->with('success', 'Guru telah ditambahkan');
     }
@@ -164,5 +166,28 @@ class UserController extends Controller
 
 
         return redirect("show-profile")->with('success', 'Password telah diupdate');
+    }
+
+    public function updateAvatar(Request $request){
+
+        $request->validate([
+            'avatar' => 'required','mimes:png,jpg,jpeg,JPG',
+        ]);
+
+        $date = date('Ymd His gis');
+
+        try {
+            $produk = User::find(Auth::user()->id);
+
+            if($request->hasFile('avatar')){
+                $request->file('avatar')->move('app-assets/images/illustrator/', $date.$request->file('avatar')->getClientOriginalName());
+                $produk->avatar = $date.$request->file('avatar')->getClientOriginalName();
+                $produk->save();
+            }
+
+            return redirect()->back()->with('success', 'Avatar telah diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', 'Avatar gagal diupdate');
+        }
     }
 }

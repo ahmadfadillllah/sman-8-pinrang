@@ -22,6 +22,7 @@ class UsersSeeder extends Seeder
             'role' => 'Admin',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('admin123'),
+            'avatar' => 'user.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
