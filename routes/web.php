@@ -13,6 +13,7 @@ use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\UjianContoller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Models\AbsensiSiswa;
 use App\Models\Pelajaran;
@@ -29,11 +30,12 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[HomeController::class, 'index'])->name('home');
-Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
-Route::post('/contact/post',[HomeController::class, 'contactpost'])->name('home.contact.post');
 
-Route::middleware(['auth'])->group(function(){
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
+Route::post('/contact/post', [HomeController::class, 'contactpost'])->name('home.contact.post');
+
+Route::middleware(['auth'])->group(function () {
     Route::get('/user-home', function () {
         return view('home.user_home');
     })->name('user-home');
@@ -47,6 +49,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/messag/{id}', 'App\Http\Controllers\ChatController@getMessag')->name('message');
     Route::get('/subscribe', 'App\Http\Controllers\ChatController@subscribe')->name('subscribe');
     Route::delete('/unFollow/{id}', 'App\Http\Controllers\ChatController@remove_user');
+
+    // End : Chat
+
+    // Begin : Chat 2
+    Route::get('/chat', [MessageController::class, 'index'])->name('chat');
+    Route::get('/show-chat/{id}', [MessageController::class, 'show'])->name('chat');
+
     /////////////////////
     Route::get('/group/create', 'App\Http\Controllers\GroupController@create_form');
     Route::post('/group/create', 'App\Http\Controllers\GroupController@create');
@@ -67,94 +76,86 @@ Route::middleware(['auth'])->group(function(){
 
 
     // akses area untuk admin
-    Route::middleware(['isGlobalAccess'])->group(function(){
+    Route::middleware(['isGlobalAccess'])->group(function () {
 
-        Route::middleware(['admin'])->group(function(){
+        Route::middleware(['admin'])->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
             Route::get('/show-message', [DashboardController::class, 'message'])->name('dashboard.message');
 
-            Route::get('/show-siswa',[UserController::class, 'showSiswa'])->name('show-siswa');
+            Route::get('/show-siswa', [UserController::class, 'showSiswa'])->name('show-siswa');
             Route::post('/show-siswa', [UserController::class, 'storeSiswa']);
 
-            Route::get('/show-siswa/{id}/edit',[UserController::class, 'editSiswa'])->name('edit-siswa');
+            Route::get('/show-siswa/{id}/edit', [UserController::class, 'editSiswa'])->name('edit-siswa');
             Route::put('/show-siswa/{id}', [UserController::class, 'updateSiswa']);
             Route::delete('/show-siswa/{id}', [UserController::class, 'destroy'])->name('delete');
 
-            Route::get('/show-guru',[UserController::class, 'showGuru'])->name('show-guru');
+            Route::get('/show-guru', [UserController::class, 'showGuru'])->name('show-guru');
             Route::post('/show-guru', [UserController::class, 'storeGuru']);
 
-            Route::get('/show-guru/{id}/edit',[UserController::class, 'editGuru'])->name('edit-guru');
+            Route::get('/show-guru/{id}/edit', [UserController::class, 'editGuru'])->name('edit-guru');
             Route::put('/show-guru/{id}', [UserController::class, 'updateGuru']);
 
-            Route::get('/input-jadwal',[JadwalController::class, 'inputJadwal'])->name('input-jadwal');
-            Route::post('/input-jadwal',[JadwalController::class, 'store']);
+            Route::get('/input-jadwal', [JadwalController::class, 'inputJadwal'])->name('input-jadwal');
+            Route::post('/input-jadwal', [JadwalController::class, 'store']);
 
-            Route::get('/detail-jadwal/{id}/edit',[JadwalController::class, 'editJadwal'])->name('edit-jadwal');
-            Route::put('/detail-jadwal/{id}/edit/{kode_kelas}',[JadwalController::class, 'updateJadwal'])->name('update-jadwal');
-            Route::delete('/detail-jadwal/{id}',[JadwalController::class, 'destroy'])->name('delete-jadwal');
+            Route::get('/detail-jadwal/{id}/edit', [JadwalController::class, 'editJadwal'])->name('edit-jadwal');
+            Route::put('/detail-jadwal/{id}/edit/{kode_kelas}', [JadwalController::class, 'updateJadwal'])->name('update-jadwal');
+            Route::delete('/detail-jadwal/{id}', [JadwalController::class, 'destroy'])->name('delete-jadwal');
 
-            Route::post('/show-kelas',[KelasController::class, 'store']);
-            Route::delete('/show-kelas/{id}',[KelasController::class, 'destroy'])->name('delete-kelas');
-
-
-            Route::get('/show-data-siswa',[DataController::class, 'showDataSiswa'])->name('show-data-siswa');
-            Route::post('/show-data-siswa',[DataController::class, 'storeSiswa']);
-            Route::get('/show-data-siswa/{id}/edit',[DataController::class, 'editSiswa'])->name('edit-data-siswa');
-            Route::put('/show-data-siswa/{id}',[DataController::class, 'updateSiswa']);
-            Route::delete('/show-data-siswa/{id}',[DataController::class, 'destroySiswa'])->name('delete-data-siswa');
+            Route::post('/show-kelas', [KelasController::class, 'store']);
+            Route::delete('/show-kelas/{id}', [KelasController::class, 'destroy'])->name('delete-kelas');
 
 
-            Route::post('/show-data-guru',[DataController::class, 'storeGuru']);
-            Route::get('/show-data-guru/{id}/edit',[DataController::class, 'editGuru'])->name('edit-data-guru');
-            Route::put('/show-data-guru/{id}',[DataController::class, 'updateGuru']);
-            Route::delete('/show-data-guru/{id}',[DataController::class, 'destroyGuru'])->name('delete-data-guru');
+            Route::get('/show-data-siswa', [DataController::class, 'showDataSiswa'])->name('show-data-siswa');
+            Route::post('/show-data-siswa', [DataController::class, 'storeSiswa']);
+            Route::get('/show-data-siswa/{id}/edit', [DataController::class, 'editSiswa'])->name('edit-data-siswa');
+            Route::put('/show-data-siswa/{id}', [DataController::class, 'updateSiswa']);
+            Route::delete('/show-data-siswa/{id}', [DataController::class, 'destroySiswa'])->name('delete-data-siswa');
 
 
-
-            Route::get('/input-pelajaran',[PelajaranController::class, 'inputPelajaran'])->name('input-pelajaran');
-            Route::post('/input-pelajaran',[PelajaranController::class, 'storePelajaran']);
-
-            Route::get('/show-kelas',[KelasController::class, 'showKelas'])->name('show-kelas');
-
-            Route::get('/show-pelajaran',[PelajaranController::class, 'showPelajaran'])->name('show-pelajaran');
-            Route::delete('/show-pelajaran/{id}',[PelajaranController::class, 'destroy'])->name('delete-pelajaran');
+            Route::post('/show-data-guru', [DataController::class, 'storeGuru']);
+            Route::get('/show-data-guru/{id}/edit', [DataController::class, 'editGuru'])->name('edit-data-guru');
+            Route::put('/show-data-guru/{id}', [DataController::class, 'updateGuru']);
+            Route::delete('/show-data-guru/{id}', [DataController::class, 'destroyGuru'])->name('delete-data-guru');
 
 
 
+            Route::get('/input-pelajaran', [PelajaranController::class, 'inputPelajaran'])->name('input-pelajaran');
+            Route::post('/input-pelajaran', [PelajaranController::class, 'storePelajaran']);
+
+            Route::get('/show-kelas', [KelasController::class, 'showKelas'])->name('show-kelas');
+
+            Route::get('/show-pelajaran', [PelajaranController::class, 'showPelajaran'])->name('show-pelajaran');
+            Route::delete('/show-pelajaran/{id}', [PelajaranController::class, 'destroy'])->name('delete-pelajaran');
         });
 
 
 
-            Route::get('/show-jadwal/mengajar',[JadwalController::class, 'showJadwalMengajar'])->name('show-jadwal-mengajar');
+        Route::get('/show-jadwal/mengajar', [JadwalController::class, 'showJadwalMengajar'])->name('show-jadwal-mengajar');
 
-            Route::get('/show-jadwal/guru',[JadwalController::class, 'showJadwalGuru'])->name('show-jadwal-guru');
+        Route::get('/show-jadwal/guru', [JadwalController::class, 'showJadwalGuru'])->name('show-jadwal-guru');
 
-            Route::get('/show-absensi-siswa', [AbsensiController::class, 'showAbsen'])->name('show-absensi-siswa');
-            Route::get('/show-absensi-siswa/{id}/detail', [AbsensiController::class, 'detailAbsen'])->name('detail-absen');
-            Route::delete('/show-absensi-siswa/{id}', [AbsensiController::class, 'destroy'])->name('delete-absen');
-            Route::post('/show-absensi-siswa', [AbsensiController::class, 'storePertemuan'])->name('input-pertemuan');
-            Route::get('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'absensiSiswa'])->name('absensi-siswa');
-            Route::post('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'storeAbsen'])->name('input-absen');
-            Route::delete('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'destroy']);
-
-
-            Route::get('/input-ujian',[UjianContoller::class, 'inputUjian'])->name('input-ujian');
-            Route::post('/input-ujian',[UjianContoller::class, 'storeJadwalUjian'])->name('input-ujian');
-
-            Route::delete('/show-ujian/{id}',[UjianContoller::class, 'destroy'])->name('delete-ujian');
+        Route::get('/show-absensi-siswa', [AbsensiController::class, 'showAbsen'])->name('show-absensi-siswa');
+        Route::get('/show-absensi-siswa/{id}/detail', [AbsensiController::class, 'detailAbsen'])->name('detail-absen');
+        Route::delete('/show-absensi-siswa/{id}', [AbsensiController::class, 'destroy'])->name('delete-absen');
+        Route::post('/show-absensi-siswa', [AbsensiController::class, 'storePertemuan'])->name('input-pertemuan');
+        Route::get('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'absensiSiswa'])->name('absensi-siswa');
+        Route::post('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'storeAbsen'])->name('input-absen');
+        Route::delete('/show-absensi-siswa/{id}/detail/{kode_pertemuan}', [AbsensiController::class, 'destroy']);
 
 
+        Route::get('/input-ujian', [UjianContoller::class, 'inputUjian'])->name('input-ujian');
+        Route::post('/input-ujian', [UjianContoller::class, 'storeJadwalUjian'])->name('input-ujian');
 
-
-
+        Route::delete('/show-ujian/{id}', [UjianContoller::class, 'destroy'])->name('delete-ujian');
     });
 
-    Route::middleware(['isWaliKelas'])->group(function(){
+    Route::middleware(['isWaliKelas'])->group(function () {
 
-        Route::get('/input-nilai/sikap',[NilaiController::class, 'inputNilaiSikap'])->name('input-nilai-sikap');
-        Route::get('/input-nilai/sikap/{id}/detail',[NilaiController::class, 'detailNilaiSikap'])->name('detail-nilai-sikap');
-        Route::post('/input-nilai/sikap/{id}/detail',[NilaiController::class, 'storeNilaiSikap']);
+        Route::get('/input-nilai/sikap', [NilaiController::class, 'inputNilaiSikap'])->name('input-nilai-sikap');
+        Route::get('/input-nilai/sikap/{id}/detail', [NilaiController::class, 'detailNilaiSikap'])->name('detail-nilai-sikap');
+        Route::post('/input-nilai/sikap/{id}/detail', [NilaiController::class, 'storeNilaiSikap']);
 
         Route::get('input-nilai-ujian', [UjianContoller::class, 'inputNilaiUjian'])->name('input-nilai-ujian');
         Route::get('input-nilai-ujian/{id}/detail', [UjianContoller::class, 'detailNilaiUjian'])->name('detail-nilai-ujian');
@@ -167,17 +168,16 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/input-nilai/prestasi', [PrestasiController::class, 'inputNilai'])->name('input-prestasi');
         Route::get('/input-nilai/prestasi/{id}/detail', [PrestasiController::class, 'detailNilai'])->name('detail-prestasi');
         Route::post('/input-nilai/prestasi/{id}/detail', [PrestasiController::class, 'storeNilai']);
-
     });
 
-    Route::get('/show-ujian',[UjianContoller::class, 'showUjian'])->name('show-ujian');
+    Route::get('/show-ujian', [UjianContoller::class, 'showUjian'])->name('show-ujian');
 
 
-    Route::get('/show-data-guru',[DataController::class, 'showDataGuru'])->name('show-data-guru');
+    Route::get('/show-data-guru', [DataController::class, 'showDataGuru'])->name('show-data-guru');
 
-    Route::get('/show-jadwal/belajar',[JadwalController::class, 'showJadwal'])->name('show-jadwal-belajar');
+    Route::get('/show-jadwal/belajar', [JadwalController::class, 'showJadwal'])->name('show-jadwal-belajar');
 
-    Route::get('/detail-jadwal/{id}/detail',[JadwalController::class, 'detailJadwal'])->name('detail-jadwal');
+    Route::get('/detail-jadwal/{id}/detail', [JadwalController::class, 'detailJadwal'])->name('detail-jadwal');
 
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -185,17 +185,14 @@ Route::middleware(['auth'])->group(function(){
     Route::put('show-profile/general', [UserController::class, 'updateGeneral'])->name('edit-general');
     Route::put('show-profile', [UserController::class, 'updatePassword'])->name('edit-password');
 
-    Route::get('/show-nilai/lapor',[NilaiController::class, 'showNilaiLapor'])->name('show-nilai-lapor');
-    Route::post('/show-nilai/lapor/siswa',[NilaiController::class, 'showNilaiLaporSiswa'])->name('show-nilai-lapor-siswa');
+    Route::get('/show-nilai/lapor', [NilaiController::class, 'showNilaiLapor'])->name('show-nilai-lapor');
+    Route::post('/show-nilai/lapor/siswa', [NilaiController::class, 'showNilaiLaporSiswa'])->name('show-nilai-lapor-siswa');
 
     Route::get('show-nilai/ujian', [UjianContoller::class, 'showNilaiUjian'])->name('show-nilai-ujian');
     Route::post('show-nilai/ujian/siswa', [UjianContoller::class, 'showNilaiUjianSiswa'])->name('show-nilai-ujian-siswa');
-
 });
 
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 
 Route::post('/login', [LoginController::class, 'store']);
-
-
