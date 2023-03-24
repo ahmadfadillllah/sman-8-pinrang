@@ -184,6 +184,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('show-profile', [UserController::class, 'profile'])->name('show-profile');
     Route::put('show-profile/general', [UserController::class, 'updateGeneral'])->name('edit-general');
     Route::put('show-profile', [UserController::class, 'updatePassword'])->name('edit-password');
+    Route::put('show-profile/avatar', [UserController::class, 'updateAvatar'])->name('edit-avatar');
 
     Route::get('/show-nilai/lapor',[NilaiController::class, 'showNilaiLapor'])->name('show-nilai-lapor');
     Route::post('/show-nilai/lapor/siswa',[NilaiController::class, 'showNilaiLaporSiswa'])->name('show-nilai-lapor-siswa');

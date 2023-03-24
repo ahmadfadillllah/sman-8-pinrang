@@ -22,13 +22,13 @@ class ChatController extends Controller
     // show all groups that User is Follow
     public function index()
     {
-        $my_id = Auth::id();
+        // $my_id = Auth::id();
         // select channels that User Subscribe
-        $users = DB::select("select groups.id, groups.name
-        from groups inner JOIN  group_participants ON groups.id = group_participants.group_id and group_participants.user_id = " . Auth::id() . "
-        where group_participants.user_id = " . Auth::id() . "
-        group by groups.id, groups.name");
-        return view('group.index', compact('users'));
+        // $users = DB::select("select groups.id, groups.name
+        // from groups inner JOIN  group_participants ON groups.id = group_participants.group_id and group_participants.user_id = " . Auth::id() . "
+        // where group_participants.user_id = " . Auth::id() . "
+        // group by groups.id, groups.name");
+        return view('group.index');
     }
     //  get all Channels are in App
     public function subscribe()

@@ -69,6 +69,10 @@ $avatar = substr(Auth::user()->name, 0, 2);
         href={{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.min.css') }}>
     <link rel="stylesheet" type="text/css"
         href={{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.min.css') }}>
+    <link
+            rel="stylesheet"
+            href={{ asset('app-assets/css/pages/app-chat.css') }}
+        />
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -386,8 +390,9 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 </ul>
             </div>
             <ul class="nav navbar-nav align-items-center ms-auto">
-                {{-- <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
-                            data-feather="moon"></i></a></li> --}}
+                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
+                            data-feather="moon"></i></a></li>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
                         id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
@@ -395,7 +400,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 class="user-name fw-bolder">{{ $user->name }}</span><span
                                 class="user-status">{{ $user->role }}</span></div><span
                             class="avatar bg-light-primary">
-                            <div class="avatar-content"><img src="{{asset('app-assets/images/illustrator/person.png')}}" alt=""></div>
+                            <div class="avatar-content"><img src="{{asset('app-assets/images/illustrator')}}/{{Auth::user()->avatar}}" width="48px"></div>
                             {{-- <div class="avatar-content">{{ $avatar }}</div> --}}
                         </span>
                     </a>
@@ -620,7 +625,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Lihat Chat</span></a>
                         </li>
-                        <li class="{{ request()->is('group/create*') ? 'active' : '' }}"><a
+                        {{-- <li class="{{ request()->is('group/create*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="/group/create"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Buat Grub Chat</span></a>
@@ -629,7 +634,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 class="d-flex align-items-center" href="{{ route('subscribe') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Gabung Grub Chat</span></a>
-                        </li>
+                        </li> --}}
                 </li>
                 </ul>
                 </li>
@@ -938,6 +943,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 <script src={{ asset('app-assets/js/scripts/pages/app-user-list.min.js') }}></script>
                 <script src={{ asset('app-assets/js/scripts/tables/table-datatables-advanced.min.js') }}></script>
                 <script src={{ asset('app-assets/js/scripts/forms/pickers/form-pickers.min.js') }}></script>
+                <script src={{ asset('app-assets/js/scripts/chat/app-chat.js') }}></script>
 
                 <!-- END: Page JS-->
 
