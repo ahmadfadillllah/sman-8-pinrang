@@ -156,7 +156,7 @@
                                 onclick="startChat({{ $contact->id }})">
                                 <a class="d-flex align-items-center">
                                     <div class="flex-shrink-0 avatar avatar-online">
-                                        <img src="{{ $contact->avatar }}" alt="Avatar" class="rounded-circle"
+                                        <img src="{{asset('app-assets/images/illustrator')}}/{{ $contact->avatar }}" alt="Avatar" class="rounded-circle"
                                             width="50px" height="50px">
                                     </div>
                                     <div class="chat-contact-info flex-grow-1 ms-2">
@@ -266,7 +266,7 @@
                 <li class="chat-contact-list-item user" onclick="readChat(${item.room_id}, ${item.participants.id})" data-room="${item.room_id}" data-id="${item.participants.id}">
                     <a class="d-flex align-items-center">
                         <div class="flex-shrink-0 avatar avatar-online">
-                            <img src="${item.participants.avatar}" alt="Avatar"
+                            <img src="{{asset('app-assets/images/illustrator')}}/${item.participants.avatar}" alt="Avatar"
                                 class="rounded-circle" width="50px" height="50px">
                         </div>
                         <div class="chat-contact-info flex-grow-1 ms-2">
