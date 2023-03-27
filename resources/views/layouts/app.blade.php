@@ -1,5 +1,5 @@
 @php
-    $user = auth()->user();
+$    $user = auth()->user();
     $avatar = substr(Auth::user()->name, 0, 2);
 @endphp
 
@@ -398,7 +398,7 @@
                                 class="user-name fw-bolder">{{ $user->name }}</span><span
                                 class="user-status">{{ $user->role }}</span></div><span
                             class="avatar bg-light-primary">
-                            <div class="avatar-content"><img src="{{ Auth::user()->avatar }}" width="40px"
+                            <div class="avatar-content"><img src="{{asset('app-assets/images/illustrator')}}/{{Auth::user()->avatar}}" width="40px"
                                     heigh="40px"></div>
                             {{-- <div class="avatar-content">{{ $avatar }}</div> --}}
                         </span>
@@ -960,9 +960,3 @@
                 </script>
 
                 @yield('script')
-</body>
-<!-- END: Body-->
-
-<!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Aug 2021 07:33:55 GMT -->
-
-</html>
