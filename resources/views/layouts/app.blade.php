@@ -1,5 +1,5 @@
 @php
-$    $user = auth()->user();
+    $user = auth()->user();
     $avatar = substr(Auth::user()->name, 0, 2);
 @endphp
 
