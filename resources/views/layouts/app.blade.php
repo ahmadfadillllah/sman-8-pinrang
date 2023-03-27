@@ -384,7 +384,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                             title="Jadwal Belajar"><i class="ficon" data-feather="calendar"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav bookmark-icons">
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href='{{ route('message') }}'
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href='{{ route('chat2') }}'
                             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat"><i class="ficon"
                                 data-feather="message-square"></i></a></li>
                 </ul>
@@ -621,7 +621,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
                             data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="User">Chat Management</span></a>
                     <ul class="menu-content">
                         <li class="{{ request()->is('chattas*') ? 'active' : '' }}"><a
-                                class="d-flex align-items-center" href="{{ route('message') }}"><i
+                                class="d-flex align-items-center" href="{{ route('chat2') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Lihat Chat</span></a>
                         </li>
