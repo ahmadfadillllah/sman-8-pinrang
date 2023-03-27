@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
     // End : Chat
 
     // Begin : Chat 2
-    Route::get('/chat', [MessageController::class, 'index'])->name('chat2');
+    Route::get('/chat', [MessageController::class, 'index'])->name('chat');
     Route::get('/show-chat/{id}', [MessageController::class, 'show'])->name('chat');
 
     /////////////////////
