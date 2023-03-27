@@ -27,7 +27,10 @@ class MessageController extends Controller
         // Convert Room to Array
         $data = json_decode($messages->toJson(), true);
 
-        return view('chat', compact('data'));
+        // all users contact
+        $contacts = User::where('id', '!=', auth()->user()->id)->get();
+
+        return view('group.index', compact('data', 'contacts'));
     }
 
     /**

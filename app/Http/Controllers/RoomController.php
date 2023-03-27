@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Room;
+use App\Models\RoomParticipant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -35,7 +38,35 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sender_id = $request->sender;
+        $receiver_id = $request->receiver;
+        $message = $request->message;
+
+        $room = Room::create([
+            'created_by' => $sender_id,
+        ]);
+
+        DB::table('room_participants')->insert([
+            'room_id' => $room->id,
+            'user_id' => $sender_id,
+            'join_date' => now()
+        ]);
+
+        DB::table('room_participants')->insert([
+            'room_id' => $room->id,
+            'user_id' => $receiver_id,
+            'join_date' => now()
+        ]);
+
+        $messages = Message::create([
+            'room_id' => $room->id,
+            'sender_id' => $sender_id,
+            'receiver_id' => $receiver_id,
+            'message_text' => $message,
+            'read_at' => null,
+        ]);
+
+        return json_encode($messages);
     }
 
     /**

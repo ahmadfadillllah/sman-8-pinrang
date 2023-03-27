@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/chat', [MessageController::class, 'show']);
 Route::post('/chat', [MessageController::class, 'store']);
 Route::put('/chat', [MessageController::class, 'update']);
+
+// create rooms
+Route::post('/rooms', [RoomController::class, 'store']);

@@ -1,6 +1,6 @@
 @php
-$user = auth()->user();
-$avatar = substr(Auth::user()->name, 0, 2);
+    $user = auth()->user();
+    $avatar = substr(Auth::user()->name, 0, 2);
 @endphp
 
 <!DOCTYPE html>
@@ -69,10 +69,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
         href={{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.min.css') }}>
     <link rel="stylesheet" type="text/css"
         href={{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.min.css') }}>
-    <link
-            rel="stylesheet"
-            href={{ asset('app-assets/css/pages/app-chat.css') }}
-        />
+    <link rel="stylesheet" href={{ asset('app-assets/css/pages/app-chat.css') }} />
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -170,7 +167,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
         .user-wrapper {
             background-image: none !important;
             height: 600px;
-            background-color:  #fff !important;
+            background-color: #fff !important;
         }
 
         .use,
@@ -357,9 +354,10 @@ $avatar = substr(Auth::user()->name, 0, 2);
         .dropdow:hover .dropdown-content {
             display: block;
         }
-
     </style>
     <!-- END: Custom CSS-->
+
+    @yield('style')
 
 </head>
 <!-- END: Head-->
@@ -379,9 +377,9 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 data-feather="menu"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav bookmark-icons">
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link"
-                            href={{ route('show-jadwal-belajar') }} data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Jadwal Belajar"><i class="ficon" data-feather="calendar"></i></a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href={{ route('show-jadwal-belajar') }}
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jadwal Belajar"><i class="ficon"
+                                data-feather="calendar"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav bookmark-icons">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link" href='/chattas'
@@ -392,7 +390,7 @@ $avatar = substr(Auth::user()->name, 0, 2);
             <ul class="nav navbar-nav align-items-center ms-auto">
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
                             data-feather="moon"></i></a></li>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
                         id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
@@ -400,7 +398,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 class="user-name fw-bolder">{{ $user->name }}</span><span
                                 class="user-status">{{ $user->role }}</span></div><span
                             class="avatar bg-light-primary">
-                            <div class="avatar-content"><img src="{{asset('app-assets/images/illustrator')}}/{{Auth::user()->avatar}}" width="48px"></div>
+                            <div class="avatar-content"><img src="{{ Auth::user()->avatar }}" width="40px"
+                                    heigh="40px"></div>
                             {{-- <div class="avatar-content">{{ $avatar }}</div> --}}
                         </span>
                     </a>
@@ -428,7 +427,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 <li class="nav-item me-auto"><a class="navbar-brand" href="{{ route('dashboard') }}"><span
                             class="brand-logo">
 
-                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="" srcset=""></span>
+                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt=""
+                                srcset=""></span>
                         <h2 class="brand-text">Navigasi</h2>
                     </a></li>
                 {{-- <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
@@ -449,7 +449,6 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                     class="menu-item text-truncate" data-i18n="eCommerce">Home</span></a></li>
                     </ul>
                     @if (Auth::user()->role == 'Admin')
-
                         <ul class="menu-content">
                             <li class="{{ request()->is('dashboard*') ? 'active' : '' }}"><a
                                     class="d-flex align-items-center" href="{{ route('dashboard') }}"><i
@@ -459,17 +458,16 @@ $avatar = substr(Auth::user()->name, 0, 2);
                     @endif
                 </li>
                 @if (Auth::user()->role == 'Admin')
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                    data-feather="message-square"></i><span class="menu-title text-truncate"
-                    data-i18n="User">Hubungi Kami</span></a>
-                    <ul class="menu-content">
-                        <li ><a
-                                class="d-flex align-items-center" href="{{ route('dashboard.message') }}"><i
-                                    data-feather="circle"></i><span class="menu-item text-truncate"
-                                    data-i18n="List">Lihat Pesan</span></a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                                data-feather="message-square"></i><span class="menu-title text-truncate"
+                                data-i18n="User">Hubungi Kami</span></a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{ route('dashboard.message') }}"><i
+                                        data-feather="circle"></i><span class="menu-item text-truncate"
+                                        data-i18n="List">Lihat Pesan</span></a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
                 @if (Auth::user()->role == 'Admin')
                     <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">User Management</span><i
@@ -502,7 +500,6 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                 Siswa</span></a>
                         <ul class="menu-content">
                             @if (Auth::user()->role == 'Admin')
-
                                 <li class="{{ request()->is('input-jadwal*') ? 'active' : '' }}"><a
                                         class="d-flex align-items-center" href="{{ route('input-jadwal') }}"><i
                                             data-feather="circle"></i><span class="menu-item text-truncate"
@@ -521,7 +518,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
 
             @if (Auth::user()->role == 'Admin')
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
-                            data-feather="book-open"></i><span class="menu-title text-truncate" data-i18n="User">Kelas
+                            data-feather="book-open"></i><span class="menu-title text-truncate"
+                            data-i18n="User">Kelas
                             Siswa</span></a>
                     <ul class="menu-content">
                         <li class="{{ request()->is('show-kelas*') ? 'active' : '' }}"><a
@@ -547,12 +545,12 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 </li>
             @endif
             @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
-
                 <li class=" navigation-header"><span data-i18n="User Interface">Guru Management</span><i
                         data-feather="more-horizontal"></i>
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                            data-feather="calendar"></i><span class="menu-title text-truncate" data-i18n="User">Jadwal
+                            data-feather="calendar"></i><span class="menu-title text-truncate"
+                            data-i18n="User">Jadwal
                             Mengajar</span></a>
                     <ul class="menu-content">
                         <li class="{{ request()->is('show-jadwal/mengajar*') ? 'active' : '' }}"><a
@@ -577,7 +575,6 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 </li>
             @endif
             @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru' || Auth::user()->role == 'Siswa')
-
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
                             data-feather="database"></i><span class="menu-title text-truncate" data-i18n="User">Data
                             Guru</span></a>
@@ -617,15 +614,15 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 </li>
             @endif
 
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                            data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="User">Chat Management</span></a>
-                    <ul class="menu-content">
-                        <li class="{{ request()->is('chattas*') ? 'active' : '' }}"><a
-                                class="d-flex align-items-center" href="/chattas"><i
-                                    data-feather="circle"></i><span class="menu-item text-truncate"
-                                    data-i18n="List">Lihat Chat</span></a>
-                        </li>
-                        {{-- <li class="{{ request()->is('group/create*') ? 'active' : '' }}"><a
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                        data-feather="message-square"></i><span class="menu-title text-truncate"
+                        data-i18n="User">Chat Management</span></a>
+                <ul class="menu-content">
+                    <li class="{{ request()->is('chattas*') ? 'active' : '' }}"><a class="d-flex align-items-center"
+                            href="/chat"><i data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="List">Lihat Chat</span></a>
+                    </li>
+                    {{-- <li class="{{ request()->is('group/create*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="/group/create"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Buat Grub Chat</span></a>
@@ -635,9 +632,9 @@ $avatar = substr(Auth::user()->name, 0, 2);
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Gabung Grub Chat</span></a>
                         </li> --}}
-                </li>
-                </ul>
-                </li>
+            </li>
+            </ul>
+            </li>
             <li class=" navigation-header"><span data-i18n="User Interface">Ujian Management</span><i
                     data-feather="more-horizontal"></i>
             </li>
@@ -666,7 +663,6 @@ $avatar = substr(Auth::user()->name, 0, 2);
                         Ujian</span></a>
                 <ul class="menu-content">
                     @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'WaliKelas')
-
                         <li class="{{ request()->is('input-nilai-ujian*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="{{ route('input-nilai-ujian') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
@@ -676,7 +672,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                     @endif
                     <li class="{{ request()->is('show-nilai/ujian*') ? 'active' : '' }}"><a
                             class="d-flex align-items-center" href="{{ route('show-nilai-ujian') }}"><i
-                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">Lihat
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="List">Lihat
                                 Nilai Ujian</span></a>
                     </li>
             </li>
@@ -701,7 +698,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                     </li>
                     </ul>
                     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                                data-feather="target"></i><span class="menu-title text-truncate" data-i18n="User">Nilai
+                                data-feather="target"></i><span class="menu-title text-truncate"
+                                data-i18n="User">Nilai
                                 Ekstrakurikuler</span></a>
                         <ul class="menu-content">
                             <li class="{{ request()->is('input-nilai/ekstrakurikuler*') ? 'active' : '' }}"><a
@@ -713,7 +711,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                     </li>
                     </ul>
                     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                                data-feather="award"></i><span class="menu-title text-truncate" data-i18n="User">Nilai
+                                data-feather="award"></i><span class="menu-title text-truncate"
+                                data-i18n="User">Nilai
                                 Prestasi</span></a>
                         <ul class="menu-content">
                             <li class="{{ request()->is('input-nilai/prestasi*') ? 'active' : '' }}"><a
@@ -738,11 +737,11 @@ $avatar = substr(Auth::user()->name, 0, 2);
                 </ul>
                 </li>
 
-                @endif
+            @endif
 
-                {{-- OPTIONAL FOR FETURE --}}
+            {{-- OPTIONAL FOR FETURE --}}
 
-                {{-- <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Configuration</span><i data-feather="more-horizontal"></i>
+            {{-- <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Configuration</span><i data-feather="more-horizontal"></i>
           </li>
           <li class=" nav-item"><a class="d-flex align-items-center" href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation" target="_blank"><i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="RestApi">Rest API</span></a>
           <li class=" nav-item"><a class="d-flex align-items-center" href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation" target="_blank"><i data-feather="code"></i><span class="menu-title text-truncate" data-i18n="Appliaction">Appliaction</span></a>
@@ -959,6 +958,8 @@ $avatar = substr(Auth::user()->name, 0, 2);
                         }
                     })
                 </script>
+
+                @yield('script')
 </body>
 <!-- END: Body-->
 

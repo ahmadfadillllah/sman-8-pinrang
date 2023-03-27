@@ -1,5 +1,31 @@
 @extends('layouts.app')
 
+{{-- {{ dd($data) }} --}}
+
+@section('style')
+    <style>
+        .counter {
+            background-color: red;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none
+        }
+
+        .bg-green {
+            background-color: rgb(204, 255, 204);
+        }
+
+        .bg-bluesky {
+            background-color: rgb(151, 229, 253);
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="app-chat card overflow-hidden">
         <div class="row g-0">
@@ -8,7 +34,7 @@
                 <div
                     class="chat-sidebar-left-user sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap px-4 pt-5">
                     <div class="avatar avatar-xl avatar-online">
-                        <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar" class="rounded-circle">
+                        <img src="{{ auth()->user()->avatar }}" alt="Avatar" class="rounded-circle">
                     </div>
                     <h5 class="mt-2 mb-0">John Doe</h5>
                     <small>Admin</small>
@@ -99,11 +125,10 @@
                     <div class="d-flex align-items-center me-3 me-lg-0">
                         <div class="flex-shrink-0 avatar avatar-online me-3" data-bs-toggle="sidebar"
                             data-overlay="app-overlay-ex" data-target="#app-chat-sidebar-left">
-                            <img class="user-avatar rounded-circle cursor-pointer"
-                                src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar" width="50px">
+                            <img class="user-avatar rounded-circle cursor-pointer" src="{{ auth()->user()->avatar }}"
+                                alt="Avatar" width="50px">
                         </div>
                         <div class="flex-grow-1 input-group input-group-merge rounded-pill">
-                            <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                             <input type="text" class="form-control chat-search-input" placeholder="Search..."
                                 aria-label="Search..." aria-describedby="basic-addon-search31">
                         </div>
@@ -115,63 +140,43 @@
                 <div class="sidebar-body">
 
                     <div class="chat-contact-list-item-title">
-                        <h5 class="text-primary mb-0 px-4 pt-3 pb-2">Chats</h5>
+                        <h5 class="text-primary mb-0 p-2">Chats</h5>
                     </div>
                     <!-- Chats -->
-                    <ul class="list-unstyled chat-contact-list" id="chat-list">
-                        <li class="chat-contact-list-item chat-list-item-0 d-none">
-                            <h6 class="text-muted mb-0">No Chats Found</h6>
-                        </li>
-                        <li class="chat-contact-list-item">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-online">
-                                    <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar"
-                                        class="rounded-circle" width="50px">
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-2">
-                                    <h6 class="chat-contact-name text-truncate m-0">Waldemar Mannering</h6>
-                                    <p class="chat-contact-status text-muted text-truncate mb-0">Refer friends. Get
-                                        rewards.</p>
-                                </div>
-                                <small class="text-muted mb-auto">5 Minutes</small>
-                            </a>
-                        </li>
-                        <li class="chat-contact-list-item active">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-offline">
-                                    <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar"
-                                        class="rounded-circle" width="50px">
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-2">
-                                    <h6 class="chat-contact-name text-truncate m-0">Felecia Rower</h6>
-                                    <p class="chat-contact-status text-muted text-truncate mb-0">I will purchase it for
-                                        sure. 👍</p>
-                                </div>
-                                <small class="text-muted mb-auto">30 Minutes</small>
-                            </a>
-                        </li>
+                    <ul class="list-unstyled chat-contact-list" id="user-wrapper">
+
+                    </ul>
+                    <div class="chat-contact-list-item-title">
+                        <h5 class="text-primary mb-0 p-2">Contacts</h5>
+                    </div>
+                    <!-- Chats -->
+                    <ul class="list-unstyled chat-contact-list">
+                        @foreach ($contacts as $contact)
+                            <li class="chat-contact-list-item contact-user" data-id="{{ $contact->id }}"
+                                onclick="startChat({{ $contact->id }})">
+                                <a class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 avatar avatar-online">
+                                        <img src="{{ $contact->avatar }}" alt="Avatar" class="rounded-circle"
+                                            width="50px" height="50px">
+                                    </div>
+                                    <div class="chat-contact-info flex-grow-1 ms-2">
+                                        <h6 class="chat-contact-name text-truncate m-0">{{ $contact->name }}</h6>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
             <!-- /Chat contacts -->
 
             <!-- Chat History -->
-            <div class="col app-chat-history bg-body">
+            <div class="col app-chat-history">
                 <div class="chat-history-wrapper">
                     <div class="chat-history-header border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex overflow-hidden align-items-center">
-                                <i class="ti ti-menu-2 ti-sm cursor-pointer d-lg-none d-block me-2"
-                                    data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
-                                <div class="flex-shrink-0 avatar">
-                                    <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar"
-                                        class="rounded-circle" width="50px" data-bs-toggle="sidebar" data-overlay
-                                        data-target="#app-chat-sidebar-right">
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-2">
-                                    <h6 class="m-0">Felecia Rower</h6>
-                                    <small class="user-status text-muted">NextJS developer</small>
-                                </div>
+                            <div class="d-flex overflow-hidden align-items-center" id="participant-user">
+                                <h5 class="p-1">Live Chat</h5>
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="ti ti-phone-call cursor-pointer d-sm-block d-none me-3"></i>
@@ -192,65 +197,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="chat-history-body bg-body">
-                        <ul class="list-unstyled chat-history">
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">How can we help? We're here for you! 😄</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class='ti ti-checks ti-xs me-1 text-success'></i>
-                                            <small>10:00 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar"
-                                                class="rounded-circle" width="40px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="user-avatar flex-shrink-0 me-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{ asset('app-assets/images/avatars/1-small.png') }}" alt="Avatar"
-                                                class="rounded-circle" width="40px">
-                                        </div>
-                                    </div>
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Hey John, I am looking for the best admin template.</p>
-                                            <p class="mb-0">Could you please help me to find it out? 🤔</p>
-                                        </div>
-                                        <div class="chat-message-text mt-2">
-                                            <p class="mb-0">It should be Bootstrap 5 compatible.</p>
-                                        </div>
-                                        <div class="text-muted mt-1">
-                                            <small>10:02 AM</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                    <div class="chat-history-body bg-blue-200y">
+                        <ul class="list-unstyled chat-history px-2" id="chat">
                         </ul>
                     </div>
                     <!-- Chat message form -->
                     <div class="chat-history-footer shadow-sm">
                         <form class="form-send-message d-flex justify-content-between align-items-center ">
-                            <input class="form-control message-input border-0 me-3 shadow-none"
-                                placeholder="Type your message here">
+                            <input class="form-control message-input border-0 me-3 shadow-none" id="message"
+                                data-receiver="0" placeholder="Type your message here" disabled>
                             <div class="message-actions d-flex align-items-center">
                                 <i class="speech-to-text ti ti-microphone ti-sm cursor-pointer"></i>
                                 <label for="attach-doc" class="form-label mb-0">
                                     <i class="ti ti-photo ti-sm cursor-pointer mx-3"></i>
                                     <input type="file" id="attach-doc" hidden>
                                 </label>
-                                <button class="btn btn-primary d-flex send-msg-btn">
-                                    <i class="ti ti-send me-md-1 me-0"></i>
-                                    <span class="align-middle d-md-inline-block d-none">Send</span>
+                                <button type="button" onclick="submitChat()" class="btn btn-primary d-flex send-msg-btn"
+                                    id="submit-btn" disabled>
+                                    Send
                                 </button>
                             </div>
                         </form>
@@ -259,71 +223,412 @@
             </div>
             <!-- /Chat History -->
 
-            <!-- Sidebar Right -->
-            <div class="col app-chat-sidebar-right app-sidebar overflow-hidden" id="app-chat-sidebar-right">
-                <div
-                    class="sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap px-4 pt-5">
-                    <div class="avatar avatar-xl avatar-online">
-                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
-                    </div>
-                    <h6 class="mt-2 mb-0">Felecia Rower</h6>
-                    <span>NextJS Developer</span>
-                    <i class="ti ti-x ti-sm cursor-pointer close-sidebar d-block" data-bs-toggle="sidebar" data-overlay
-                        data-target="#app-chat-sidebar-right"></i>
-                </div>
-                <div class="sidebar-body px-4 pb-4">
-                    <div class="my-4">
-                        <p class="text-muted text-uppercase">About</p>
-                        <p class="mb-0 mt-3">A Next. js developer is a software developer who uses the Next. js framework
-                            alongside ReactJS to build web applications.</p>
-                    </div>
-                    <div class="my-4">
-                        <p class="text-muted text-uppercase">Personal Information</p>
-                        <ul class="list-unstyled d-grid gap-2 mt-3">
-                            <li class="d-flex align-items-center">
-                                <i class='ti ti-mail'></i>
-                                <span class="align-middle ms-2">josephGreen@email.com</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class='ti ti-phone-call'></i>
-                                <span class="align-middle ms-2">+1(123) 456 - 7890</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class='ti ti-clock'></i>
-                                <span class="align-middle ms-2">Mon - Fri 10AM - 8PM</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-muted text-uppercase">Options</p>
-                        <ul class="list-unstyled d-grid gap-2 mt-3">
-                            <li class="cursor-pointer d-flex align-items-center">
-                                <i class='ti ti-badge'></i>
-                                <span class="align-middle ms-2">Add Tag</span>
-                            </li>
-                            <li class="cursor-pointer d-flex align-items-center">
-                                <i class='ti ti-star'></i>
-                                <span class="align-middle ms-2">Important Contact</span>
-                            </li>
-                            <li class="cursor-pointer d-flex align-items-center">
-                                <i class='ti ti-photo'></i>
-                                <span class="align-middle ms-2">Shared Media</span>
-                            </li>
-                            <li class="cursor-pointer d-flex align-items-center">
-                                <i class='ti ti-trash'></i>
-                                <span class="align-middle ms-2">Delete Contact</span>
-                            </li>
-                            <li class="cursor-pointer d-flex align-items-center">
-                                <i class='ti ti-ban'></i>
-                                <span class="align-middle ms-2">Block Contact</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /Sidebar Right -->
-
             <div class="app-overlay"></div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="https://cdn.socket.io/socket.io-3.0.5.js"></script>
+    <script>
+        const server = io('http://localhost:3000')
+        const senderId = "<?= Auth::user()->id ?>"
+        let listUser = <?= json_encode($data) ?>
+
+        // each user onclick get data-id attribute
+        const readChat = (room, receiver) => {
+            const id = room
+            const receiverId = receiver
+            room_id = id
+
+            // emit event to server
+            server.emit('show-chat', {
+                id,
+                userId: senderId,
+                receiverId
+            })
+        }
+
+        const renderListUser = () => {
+            // order list user by message.created_at desc
+            const orderList = listUser.sort((a, b) => {
+                return new Date(b.messages.created_at) - new Date(a.messages.created_at)
+            })
+            // get user wrapper
+            const userWrapper = document.getElementById('user-wrapper')
+
+            // clear user wrapper
+            userWrapper.innerHTML = ''
+
+            // insert listUser to user wrapper
+            orderList.forEach(item => {
+                userWrapper.innerHTML += `
+                <li class="chat-contact-list-item user" onclick="readChat(${item.room_id}, ${item.participants.id})" data-room="${item.room_id}" data-id="${item.participants.id}">
+                    <a class="d-flex align-items-center">
+                        <div class="flex-shrink-0 avatar avatar-online">
+                            <img src="${item.participants.avatar}" alt="Avatar"
+                                class="rounded-circle" width="50px" height="50px">
+                        </div>
+                        <div class="chat-contact-info flex-grow-1 ms-2">
+                            <h6 class="chat-contact-name text-truncate m-0">${item.participants.name}</h6>
+                            <p class="chat-contact-status text-muted text-truncate mb-0">${item.messages.message_text}</p>
+                        </div>
+                        <div class="counter"data-count="${item.not_read_messages}"></div>
+                    </a>
+                </li>
+            `
+            })
+
+            const counters = document.querySelectorAll('.counter')
+            counters.forEach(counter => {
+                // set data-count to innerHTML
+
+                if (counter.getAttribute('data-count') != 0) {
+                    counter.style.display = 'flex'
+                }
+                counter.innerHTML = counter.getAttribute('data-count')
+            })
+        }
+
+        renderListUser()
+
+        const users = document.querySelectorAll('.user')
+        const chat = document.getElementById('chat')
+        const counters = document.querySelectorAll('.counter')
+        const message = document.getElementById('message')
+        const button = document.getElementById('submit-btn')
+        const participantUser = document.getElementById('participant-user')
+        let room_id = null
+        let dataChat = []
+
+        counters.forEach(counter => {
+            // set data-count to innerHTML
+
+            if (counter.getAttribute('data-count') != 0) {
+                counter.style.display = 'flex'
+            }
+            counter.innerHTML = counter.getAttribute('data-count')
+        })
+
+        // format Date
+        const formatDate = (date) => {
+            const d = new Date(date)
+            const year = d.getFullYear()
+            const month = String(d.getMonth() + 1).padStart(2, '0')
+            const _date = String(d.getDate()).padStart(2, '0')
+            const hour = String(d.getHours()).padStart(2, '0')
+            const minute = String(d.getMinutes()).padStart(2, '0')
+            const second = String(d.getSeconds()).padStart(2, '0')
+
+            return `${hour}:${minute}:${second}`
+        }
+
+        // render chat
+        const renderChat = () => {
+            chat.innerHTML = ''
+            // insert chat to chat div
+            dataChat.forEach(item => {
+                // if sender id is equal to sender id bg color is blue, else bg color is green
+                if (item.sender_id == senderId) {
+                    chat.innerHTML += `
+                    <li class="chat-message chat-message-right">
+                        <div class="d-flex overflow-hidden">
+                            <div class="chat-message-wrapper flex-grow-1">
+                                <div class="chat-message-text bg-bluesky">
+                                    <p class="mb-0"> ${item.message_text}</p>
+                                </div>
+                                <div class="text-end text-muted mt-1">
+                                    <i class='ti ti-checks ti-xs me-1 text-success'></i>
+                                    <small>${formatDate(item.created_at)}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                `
+                } else {
+                    chat.innerHTML += `
+                    <li class="chat-message">
+                        <div class="d-flex overflow-hidden">
+                            <div class="chat-message-wrapper flex-grow-1">
+                                <div class="chat-message-text bg-body">
+                                    <p class="mb-0">${item.message_text}</p>
+                                </div>
+                                <div class="text-muted mt-1">
+                                    <small>${formatDate(item.created_at)}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                `
+                }
+            })
+
+            // enable message input
+            message.disabled = false
+            // reset message value
+            message.value = ''
+            // scroll to end chat
+            chat.scrollTop = chat.scrollHeight
+        }
+
+        server.on('show-chat', data => {
+            dataChat = data.message
+            // set message data-receiver to data.participants_id
+            message.setAttribute('data-receiver', data.participants_id)
+
+            // search user where data-id is equal to data.participants_id
+            const user = document.querySelector(`.user[data-id="${data.participants_id}"]`)
+
+            // search class counter in user, and set value data-count to 0 and inner html to 0 and display none
+            const counter = user.querySelector('.counter')
+            counter.setAttribute('data-count', 0)
+            counter.innerHTML = 0
+            counter.style.display = 'none'
+
+            // get name by class "chat-contact-name"
+            const name = user.querySelector('.chat-contact-name').innerText
+
+            // get image in div with class "avatar-online"
+            const image = user.querySelector('.avatar-online')
+            // get img tag and get src attribute
+            const imageSrc = image.querySelector('img').getAttribute('src')
+
+
+            // set participantUser inner html to data.participants_name
+            participantUser.innerHTML = ''
+            participantUser.innerHTML = `
+            <div class="flex-shrink-0 avatar">
+                <img src="${imageSrc}" alt="Avatar"
+                    class="rounded-circle" width="50px" height="50px" data-bs-toggle="sidebar" data-overlay
+                    data-target="#app-chat-sidebar-right">
+            </div>
+            <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="m-0">${name}</h6>
+            </div>
+            `
+
+            // Render Chat
+            renderChat()
+        })
+
+        const submitChat = () => {
+            const message_value = message.value
+            const receiverId = message.getAttribute('data-receiver')
+
+            const data = {
+                room: room_id,
+                sender: senderId,
+                receiver: receiverId,
+                message: message_value
+            }
+
+            server.emit('submit-chat', data)
+
+            // set button to disabled
+            button.disabled = true
+            // set button text to "sending..."
+            button.innerHTML = 'Sending...'
+
+            // disable message input
+            message.disabled = true
+        }
+
+        const startChat = (id) => {
+            // search user where data-id is equal to id
+            const user = document.querySelector(`.user[data-id="${id}"]`)
+
+            if (!user) {
+                const user = document.querySelector(`.contact-user[data-id="${id}"]`)
+                // get name by class "chat-contact-name"
+                const name = user.querySelector('.chat-contact-name').innerText
+
+                // get image in div with class "avatar-online"
+                const image = user.querySelector('.avatar-online')
+                // get img tag and get src attribute
+                const imageSrc = image.querySelector('img').getAttribute('src')
+
+
+                // set participantUser inner html to data.participants_name
+                participantUser.innerHTML = ''
+                participantUser.innerHTML = `
+                <div class="flex-shrink-0 avatar">
+                    <img src="${imageSrc}" alt="Avatar"
+                        class="rounded-circle" width="50px" height="50px" data-bs-toggle="sidebar" data-overlay
+                        data-target="#app-chat-sidebar-right">
+                </div>
+                <div class="chat-contact-info flex-grow-1 ms-2">
+                    <h6 class="m-0">${name}</h6>
+                </div>`
+
+                chat.innerHTML = ''
+                room_id = null
+                message.setAttribute('data-receiver', id)
+                message.value = ''
+                message.disabled = false
+                button.disabled = false
+            } else {
+                const room_id = user.getAttribute('data-room')
+                const receiverId = user.getAttribute('data-id')
+
+                // emit event to server
+                server.emit('show-chat', {
+                    id: room_id,
+                    userId: senderId,
+                    receiverId
+                })
+            }
+        }
+
+        server.on('chat-update', data => {
+            // enable button
+            button.disabled = false
+            // set button text to "send"
+            button.innerHTML = 'Send'
+
+            // enable message input
+            message.disabled = false
+
+            if (room_id !== data.room_id) {
+                // search user where data-room is equal to data.room_id
+                const user = document.querySelector(`.user[data-room="${data.room_id}"]`)
+                // set value class counter in user data-count + 1 and inner html + 1 and display flex
+                const lastMessage = data.message[data.message.length - 1]
+
+                listUser = listUser.map(item => {
+                    if (item.room_id == data.room_id) {
+                        item.messages = lastMessage
+                        item.not_read_messages = parseInt(item.not_read_messages) + 1
+                    }
+                    return item
+                })
+
+                renderListUser()
+
+                const counter = user.querySelector('.counter')
+                counter.setAttribute('data-count', parseInt(counter.getAttribute('data-count')) + 1)
+                counter.innerHTML = counter.getAttribute('data-count')
+
+                if (counter.getAttribute('data-count') != 0) {
+                    counter.style.display = 'flex'
+                }
+
+            } else {
+                const lastMessage = data.message[data.message.length - 1]
+                // re render list user
+                listUser = listUser.map(item => {
+                    if (item.room_id == data.room_id) {
+                        item.messages = lastMessage
+                        item.not_read_messages = 0
+                    }
+                    return item
+                })
+                renderListUser()
+
+                // re  render chat
+                dataChat = data.message
+                renderChat()
+            }
+        })
+
+        server.on('send-chat', datas => {
+
+            // enable button
+            button.disabled = false
+            // set button text to "send"
+            button.innerHTML = 'Send'
+
+            // enable message input
+            message.disabled = false
+
+            dataChat = datas.data.message
+            renderChat()
+
+            // get class contact-user where data-id is equal to data.sender
+            const user = document.querySelector(`.contact-user[data-id="${datas.receiver}"]`)
+
+            // get user name from class chat-contact-name
+            const name = user.querySelector('.chat-contact-name').innerText
+
+            // get image in div with class "avatar-online"
+            const image = user.querySelector('.avatar-online')
+            // get img tag and get src attribute
+            const imageSrc = image.querySelector('img').getAttribute('src')
+
+            const item = {
+                room_id: datas.data.id,
+                participants: {
+                    id: datas.data.participants_id,
+                    name: name,
+                    avatar: imageSrc
+                },
+                messages: {
+                    message_text: datas.data.message[0].message_text,
+                    created_at: datas.data.message[0].created_at
+                },
+                not_read_messages: 0
+            }
+
+            // push item to listUser
+            listUser.push(item)
+            renderListUser()
+
+            room_id = datas.data.id
+        })
+
+        server.on('new-chat', datas => {
+            if (datas.receiver !== senderId) return
+
+            // get class contact-user where data-id is equal to data.sender
+            const user = document.querySelector(`.contact-user[data-id="${datas.sender}"]`)
+            // get user name from class chat-contact-name
+            const name = user.querySelector('.chat-contact-name').innerText
+
+            // get image in div with class "avatar-online"
+            const image = user.querySelector('.avatar-online')
+            // get img tag and get src attribute
+            const imageSrc = image.querySelector('img').getAttribute('src')
+
+            const item = {
+                room_id: datas.data.id,
+                participants: {
+                    id: datas.sender,
+                    name: name,
+                    avatar: imageSrc
+                },
+                messages: {
+                    message_text: datas.data.message[0].message_text,
+                    created_at: datas.data.message[0].created_at
+                },
+                not_read_messages: 1
+            }
+
+            // push item to listUser
+            listUser.push(item)
+            renderListUser()
+        })
+
+        const test = () => {
+            // get class counter foreach user
+            users.forEach(user => {
+                // get class counter in user
+                const counter = user.querySelector('.counter')
+                // data-counter + 1
+                counter.setAttribute('data-count', parseInt(counter.getAttribute('data-count')) + 1)
+                counter.innerHTML = counter.getAttribute('data-count')
+
+                // if data-counter is not 0, display flex
+                if (counter.getAttribute('data-count') != 0) {
+                    counter.style.display = 'flex'
+                }
+            })
+        }
+
+        message.addEventListener('input', () => {
+            if (message.value.length > 0) {
+                button.disabled = false
+            } else {
+                button.disabled = true
+            }
+        })
+    </script>
 @endsection
