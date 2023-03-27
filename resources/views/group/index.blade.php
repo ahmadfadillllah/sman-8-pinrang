@@ -125,7 +125,7 @@
                     <div class="d-flex align-items-center me-3 me-lg-0">
                         <div class="flex-shrink-0 avatar avatar-online me-3" data-bs-toggle="sidebar"
                             data-overlay="app-overlay-ex" data-target="#app-chat-sidebar-left">
-                            <img class="user-avatar rounded-circle cursor-pointer" src="{{ auth()->user()->avatar }}"
+                            <img class="user-avatar rounded-circle cursor-pointer" src="{{asset('app-assets/images/illustrator')}}/{{ auth()->user()->avatar }}"
                                 alt="Avatar" width="50px">
                         </div>
                         <div class="flex-grow-1 input-group input-group-merge rounded-pill">
