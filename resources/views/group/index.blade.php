@@ -398,7 +398,7 @@
             participantUser.innerHTML = ''
             participantUser.innerHTML = `
             <div class="flex-shrink-0 avatar">
-                <img src="${imageSrc}" alt="Avatar"
+                <img src="{{asset('app-assets/images/illustrator')}}/${imageSrc}" alt="Avatar"
                     class="rounded-circle" width="50px" height="50px" data-bs-toggle="sidebar" data-overlay
                     data-target="#app-chat-sidebar-right">
             </div>
