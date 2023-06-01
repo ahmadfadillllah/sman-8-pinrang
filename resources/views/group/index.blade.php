@@ -231,7 +231,7 @@
 @section('script')
     <script src="https://cdn.socket.io/socket.io-3.0.5.js"></script>
     <script>
-        const server = io('https://sman8pinrangchat.adhyy.my.id')
+        const server = io('https://chat.mahesadev.com')
         const senderId = "<?= Auth::user()->id ?>"
         let listUser = <?= json_encode($data) ?>
 
