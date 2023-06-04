@@ -103,9 +103,9 @@
                                     <img src="{{ asset('iteck') }}/assets/img/header/head5_pen.png" alt="" class="head-pen">
                                 </span>
                             </h1>
-                            <p>
+                            {{-- <p>
                                 APLIKASI PENGOLAHAN DATA NILAI SISWA MENGGUNAKAN METODE SCRUM DI SMA NEGERI 8 PINRANG
-                            </p>
+                            </p> --}}
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                                             </h2>
                                             <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
-                                                    (40305166) SMAN 8 PINRANG <a href="https://sekolah.data.kemdikbud.go.id/index.php/Chome/profil/37A3756E-293F-497D-9B79-8C9CA0F38CD4" style="color:aqua">Selengkapnya</a>
+                                                    SMAN 8 PINRANG yang beralamat di Jl. Poros Pinrang – Polman, Kec. Lembang, Kab. Pinrang, Provinsi Sulawesi Selatan 91254.  Sekolah ini memiliki 116 pegawai diantaranya 52 orang guru, 6 orang tenaga pendidik dan 58 orang Penelitian Tindakan Kelas (PTK) serta 950 peserta didik.
                                                 </div>
                                             </div>
                                         </div>

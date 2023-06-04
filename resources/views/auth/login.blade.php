@@ -12,7 +12,7 @@
                     <div class="auth-inner row m-0">
                         <!-- Brand logo-->
                         <a class="brand-logo" href="#">
-                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" width="50px" alt="">
+                            <img src="{{ asset('app-assets/images/logo/sekolah.png') }}" width="50px" alt="">
                             <h2 class="brand-text text-primary ms-1">{{ config('app.name') }}</h2>
                         </a>
                         <!-- /Brand logo-->

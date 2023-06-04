@@ -427,9 +427,9 @@
                 <li class="nav-item me-auto"><a class="navbar-brand" href="{{ route('dashboard') }}"><span
                             class="brand-logo">
 
-                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt=""
+                            <img src="{{ asset('app-assets/images/logo/sekolah.png') }}" alt=""
                                 srcset=""></span>
-                        <h2 class="brand-text">Navigasi</h2>
+                        <h2 class="brand-text" style="font-size: 12pt">SMAN 8 PINRANG</h2>
                     </a></li>
                 {{-- <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
                             class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
@@ -726,12 +726,12 @@
                 @endif
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                             data-feather="book"></i><span class="menu-title text-truncate" data-i18n="User">Nilai
-                            Lapor</span></a>
+                            Raport</span></a>
                     <ul class="menu-content">
                         <li class="{{ request()->is('show-nilai/lapor*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="{{ route('show-nilai-lapor') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
-                                    data-i18n="List">Lihat Lapor</span></a>
+                                    data-i18n="List">Lihat Raport</span></a>
                         </li>
                 </li>
                 </ul>
