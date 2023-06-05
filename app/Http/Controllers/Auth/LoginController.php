@@ -28,7 +28,7 @@ class LoginController extends Controller
 
 
         if(Auth::attempt($attributes)){
-                return redirect('/dashboard');
+                return redirect('/dashboard')->with('success', 'Selamat Datang..');
         }
 
 

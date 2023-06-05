@@ -78,7 +78,6 @@ Route::middleware(['auth'])->group(function () {
     // akses area untuk admin
     Route::middleware(['isGlobalAccess'])->group(function () {
 
-        Route::middleware(['admin'])->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
             Route::get('/show-message', [DashboardController::class, 'message'])->name('dashboard.message');
@@ -128,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/show-pelajaran', [PelajaranController::class, 'showPelajaran'])->name('show-pelajaran');
             Route::delete('/show-pelajaran/{id}', [PelajaranController::class, 'destroy'])->name('delete-pelajaran');
-        });
+
 
 
 

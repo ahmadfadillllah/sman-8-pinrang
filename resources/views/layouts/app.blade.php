@@ -366,6 +366,24 @@
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
     data-menu="vertical-menu-modern" data-col="">
+    @if (session('info'))
+    <script>
+        Swal.fire(
+    'Upps!',
+    '{{ session('info') }}',
+    'info'
+    )
+    </script>
+    @endif
+    @if (session('success'))
+        <script>
+            Swal.fire(
+        'Great..',
+        '{{ session('success') }}',
+        'success'
+        )
+    </script>
+  @endif
 
     <!-- BEGIN: Header-->
     <nav
@@ -382,7 +400,7 @@
                                 data-feather="calendar"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav bookmark-icons">
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href='/chattas'
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href='/chat'
                             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat"><i class="ficon"
                                 data-feather="message-square"></i></a></li>
                 </ul>

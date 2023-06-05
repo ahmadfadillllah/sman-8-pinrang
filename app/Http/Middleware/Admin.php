@@ -17,7 +17,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         if ($request->user()->role != 'Admin') {
-            return redirect('/');
+            return redirect('/login')->with('info', 'Hak akses tidak ada');
         }
         return $next($request);
     }

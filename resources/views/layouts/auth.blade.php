@@ -50,6 +50,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets') }}/style.css">
     <!-- END: Custom CSS-->
 
+    {{-- Sweet Alert 2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
   <!-- END: Head-->
 
@@ -85,6 +88,25 @@ License: You must have a valid license purchased only from themeforest(the above
       })
     </script>
   </body>
+  @if (session('info'))
+    <script>
+        Swal.fire(
+    'Upps!',
+    '{{ session('info') }}',
+    'info'
+    )
+</script>
+  @endif
+
+  @if (session('success'))
+    <script>
+        Swal.fire(
+    'Great..',
+    '{{ session('success') }}',
+    'success'
+    )
+</script>
+  @endif
   <!-- END: Body-->
 
 <!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/page-auth-register-v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Aug 2021 07:34:34 GMT -->

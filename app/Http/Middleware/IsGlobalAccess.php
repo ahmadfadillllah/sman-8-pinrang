@@ -16,8 +16,8 @@ class IsGlobalAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->role != 'Admin' && $request->user()->role != 'Guru') {
-            return redirect('/');
+        if ($request->user()->role != 'Admin' && $request->user()->role != 'Guru' && $request->user()->role != 'Siswa') {
+            return redirect('/login')->with('info', 'Hak akses tidak ada');
         }
         return $next($request);
     }
