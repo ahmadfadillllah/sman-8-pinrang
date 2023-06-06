@@ -698,7 +698,7 @@
             </ul>
             </li>
 
-            @if (Auth::user()->role != 'Guru')
+            {{-- @if (Auth::user()->role != 'Guru') --}}
                 <li class=" navigation-header"><span data-i18n="User Interface">Nilai Management</span><i
                         data-feather="more-horizontal"></i>
                 </li>
@@ -755,7 +755,7 @@
                 </ul>
                 </li>
 
-            @endif
+            {{-- @endif --}}
 
             {{-- OPTIONAL FOR FETURE --}}
 
