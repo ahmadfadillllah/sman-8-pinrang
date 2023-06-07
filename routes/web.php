@@ -148,9 +148,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/input-ujian', [UjianContoller::class, 'storeJadwalUjian'])->name('input-ujian');
 
         Route::delete('/show-ujian/{id}', [UjianContoller::class, 'destroy'])->name('delete-ujian');
-    });
-
-    Route::middleware(['isWaliKelas'])->group(function () {
 
         Route::get('/input-nilai/sikap', [NilaiController::class, 'inputNilaiSikap'])->name('input-nilai-sikap');
         Route::get('/input-nilai/sikap/{id}/detail', [NilaiController::class, 'detailNilaiSikap'])->name('detail-nilai-sikap');
@@ -167,6 +164,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/input-nilai/prestasi', [PrestasiController::class, 'inputNilai'])->name('input-prestasi');
         Route::get('/input-nilai/prestasi/{id}/detail', [PrestasiController::class, 'detailNilai'])->name('detail-prestasi');
         Route::post('/input-nilai/prestasi/{id}/detail', [PrestasiController::class, 'storeNilai']);
+    });
+
+    Route::middleware(['isWaliKelas'])->group(function () {
+
+
     });
 
     Route::get('/show-ujian', [UjianContoller::class, 'showUjian'])->name('show-ujian');
