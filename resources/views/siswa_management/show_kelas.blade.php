@@ -59,9 +59,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @foreach ($kelas as $kls)
                                     <tr>
-                                        <td>{{ $kls->id }}</td>
+                                        <td>{{ $no }}</td>
 
                                         <td>{{ $kls->kelas }}</td>
 
@@ -77,6 +80,9 @@
                                             </form>
                                         </td>
                                     </tr>
+                                @php
+                                    $no++;
+                                @endphp
                                 @endforeach
 
                             </tbody>
