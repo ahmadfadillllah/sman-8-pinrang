@@ -19,9 +19,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
                                 @foreach ($kelas as $data)
                                     <tr>
-                                        <td>{{ $data->id }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $data->kelas }}</td>
                                         <td>
                                             <a  href="{{ route('detail-nilai-ujian', ['id'=>$data->id]) }}">
@@ -30,6 +33,9 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @php
+                                        $no++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
