@@ -21,9 +21,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @foreach ($pelajaran as $data)
                                     <tr>
-                                        <td>{{ $data->id }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $data->mata_pelajaran }}</td>
                                         <td>{{ $data->jumlah_jam }}</td>
                                         <td>
@@ -37,6 +40,9 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @php
+                                        $no++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
