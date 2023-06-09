@@ -8,7 +8,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h4 class="card-title">Daftar Kelas</h4>
+                        <h4 class="card-title">Jadwal Ujian</h4>
                     </div>
                     <div class="table-responsive">
                         <table class="table">
@@ -26,9 +26,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no  = 1;
+                                @endphp
                                 @foreach ($jadwalUjian as $data)
                                     <tr>
-                                        <td>{{ $data->id }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $data->hari->nama_hari }}</td>
                                         <td>{{ $data->tanggal }}</td>
                                         <td>{{ $data->jam }}</td>
@@ -47,6 +50,9 @@
                                         </td>
                                         @endif
                                     </tr>
+                                @php
+                                    $no++;
+                                @endphp
                                 @endforeach
 
                             </tbody>
