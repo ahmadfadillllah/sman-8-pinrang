@@ -35,11 +35,9 @@ class JadwalController extends Controller
         $rabu = Jadwal::where('kode_kelas', $id)->where('kode_hari', 3)->orderBy('jam', 'asc')->get();
         $kamis = Jadwal::where('kode_kelas', $id)->where('kode_hari', 4)->orderBy('jam', 'asc')->get();
         $jumat = Jadwal::where('kode_kelas', $id)->where('kode_hari', 5)->orderBy('jam', 'asc')->get();
-        $kelas = Kelas::all();
+        $kelas = Kelas::where('id', $id)->first();
 
-        // dd(" $kelas[$id]->kelas");
-
-        $title = $kelas[$id - 1]->kelas?? "";
+        $title = $kelas->kelas;
 
         return view('siswa_management.detail_jadwal', compact(['hari', 'senin', 'selasa', 'rabu','kamis','jumat', 'title']));
     }
