@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <form class="form" action="{{ route('detail-nilai-ujian', ['id' => $kode_kelas]) }}" method="POST">
                             @csrf
-                            <input value="{{ $select_guru->id }}" type="text" id="first-name"
+                            <input value="{{ Auth::user()->id }}" type="text" id="first-name"
                                             class="form-control" name="kode_guru"
                                             placeholder="Masukkan Guru di Daftar Kelas" hidden/>
                             <div class="row">

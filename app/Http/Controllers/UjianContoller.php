@@ -69,11 +69,11 @@ class UjianContoller extends Controller
     public function detailNilaiUjian($id){
         $siswa = Siswa::where('kode_kelas', $id)->get();
         $guru = Guru::all();
-        $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
+        // $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
         $pelajaran = Pelajaran::all();
         $kode_kelas = $id;
 
-        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas', 'select_guru']));
+        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas']));
 
     }
 
