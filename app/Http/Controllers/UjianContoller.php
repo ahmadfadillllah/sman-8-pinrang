@@ -10,6 +10,7 @@ use App\Models\Nilai;
 use App\Models\Pelajaran;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UjianContoller extends Controller
 {
@@ -57,17 +58,22 @@ class UjianContoller extends Controller
     // Nilai Ujian Controller
 
     public function inputNilaiUjian(){
-        $kelas = Kelas::all();
+        if(Auth::user()->role == 'Admin'){
+            $kelas = Kelas::all();
+        }else{
+            $kelas = Kelas::where('guru', Auth::user()->name)->get();
+        }
         return view('ujian_management.input_nilai_ujian', compact('kelas'));
     }
 
     public function detailNilaiUjian($id){
         $siswa = Siswa::where('kode_kelas', $id)->get();
         $guru = Guru::all();
+        $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
         $pelajaran = Pelajaran::all();
         $kode_kelas = $id;
 
-        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas']));
+        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas', 'select_guru']));
 
     }
 
@@ -77,6 +83,7 @@ class UjianContoller extends Controller
             'kode_guru' => ['required'],
             'kode_pelajaran' => ['required'],
             'semester' => ['required'],
+            'tahun_akademik' => ['required'],
             'nilai' => ['required', 'max:3'],
             'desk_pengetahuan' => ['required', 'max:255'],
             'desk_keterampilan' => ['required', 'max:255'],
@@ -103,6 +110,7 @@ class UjianContoller extends Controller
             'kode_guru' => $request->kode_guru,
             'kode_pelajaran' => $request->kode_pelajaran,
             'semester' => $request->semester,
+            'tahun_akademik' => $request->tahun_akademik,
             'nilai' => $request->nilai,
             'predikat' => $predikat,
             'desk_pengetahuan'  => $request->desk_pengetahuan,
@@ -113,27 +121,21 @@ class UjianContoller extends Controller
     }
 
     public function showNilaiUjian(){
-        return view('ujian_management.show_nilai_ujian');
+        if(Auth::user()->role == 'Admin'){
+            $kelas = Kelas::all();
+        }else{
+            $kelas = Kelas::where('guru', Auth::user()->name)->get();
+        }
+        return view('ujian_management.show_nilai_ujian', compact('kelas'));
     }
 
-    public function showNilaiUjianSiswa(Request $request){
+    public function showNilaiUjianSiswa(Request $request, $id){
 
-        $request->validate([
-            'no_induk' => ['required'],
-            'semester' => ['required'],
-        ]);
-        $siswa = Siswa::where('no_induk', $request->no_induk)->first();
+        $kelas = Kelas::where('id', $id)->first();
 
-        try {
-            $nilai = Nilai::where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
-        } catch (\Throwable $th) {
-           return view('ujian_management.components.search_not_found');
-        }
+        $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')->where('kode_kelas', $id)->get()->sortBy('siswa.nama_siswa');
 
-        $title = $siswa->nama_siswa;
-
-
-        return view('ujian_management.components.nilai_ujian', compact('nilai', 'title'));
+        return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
     }
 
     // ...

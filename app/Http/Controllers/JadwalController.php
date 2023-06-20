@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Siswa;
 use App\Models\Guru;
 use App\Models\Hari;
 use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\Pelajaran;
+use App\Models\Siswa as ModelsSiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class JadwalController extends Controller
@@ -23,7 +26,11 @@ class JadwalController extends Controller
 
     public function showJadwal()
     {
-        $jadwal = Kelas::all();
+        if(Auth::user()->role == 'Admin'){
+            $jadwal = Kelas::all();
+        }else{
+            $jadwal = Kelas::where('guru', Auth::user()->name)->get();
+        }
         return view('siswa_management.show_jadwal', compact('jadwal'));
     }
 
@@ -36,6 +43,22 @@ class JadwalController extends Controller
         $kamis = Jadwal::where('kode_kelas', $id)->where('kode_hari', 4)->orderBy('jam', 'asc')->get();
         $jumat = Jadwal::where('kode_kelas', $id)->where('kode_hari', 5)->orderBy('jam', 'asc')->get();
         $kelas = Kelas::where('id', $id)->first();
+
+        $title = $kelas->kelas;
+
+        return view('siswa_management.detail_jadwal', compact(['hari', 'senin', 'selasa', 'rabu','kamis','jumat', 'title']));
+    }
+
+    public function detailJadwalSiswa($id)
+    {
+        $siswa = ModelsSiswa::where('nama_siswa', $id)->first();
+        $hari = Hari::all();
+        $senin = Jadwal::where('kode_kelas', $siswa->kode_kelas)->where('kode_hari', 1)->orderBy('jam', 'asc')->get();
+        $selasa = Jadwal::where('kode_kelas', $siswa->kode_kelas)->where('kode_hari', 2)->orderBy('jam', 'asc')->get();
+        $rabu = Jadwal::where('kode_kelas', $siswa->kode_kelas)->where('kode_hari', 3)->orderBy('jam', 'asc')->get();
+        $kamis = Jadwal::where('kode_kelas', $siswa->kode_kelas)->where('kode_hari', 4)->orderBy('jam', 'asc')->get();
+        $jumat = Jadwal::where('kode_kelas', $siswa->kode_kelas)->where('kode_hari', 5)->orderBy('jam', 'asc')->get();
+        $kelas = Kelas::where('id', $siswa->kode_kelas)->first();
 
         $title = $kelas->kelas;
 

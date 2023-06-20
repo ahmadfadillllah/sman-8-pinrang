@@ -12,6 +12,9 @@
                     <div class="card-body">
                         <form class="form" action="{{ route('detail-nilai-ujian', ['id' => $kode_kelas]) }}" method="POST">
                             @csrf
+                            <input value="{{ $select_guru->id }}" type="text" id="first-name"
+                                            class="form-control" name="kode_guru"
+                                            placeholder="Masukkan Guru di Daftar Kelas" hidden/>
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <label class="form-label" for="fp-default">Pilih Semester</label>
@@ -32,7 +35,7 @@
                                         <select class="form-select" id="basicSelect" name="kode_siswa">
                                             <option disabled selected>Pilih Siswa</option>
                                             @foreach ($siswa as $data)
-                                                <option value="{{ $data->id }}">{{ $data->nama_siswa }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->no_induk }} | {{ $data->nama_siswa }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -59,16 +62,15 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 col-12">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basicSelect">Guru Pengajar</label>
-                                        <select class="form-select" id="basicSelect" name="kode_guru">
-                                            <option disabled selected>Pilih Mata Pelajaran</option>
-                                            @foreach ($guru as $data)
-                                                <option value="{{ $data->id }}">{{ $data->nama_guru }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('kode_guru')
+                                    <label class="form-label" for="fp-default">Pilih Tahun Akademik</label>
+                                    <select class="form-select" id="basicSelect" name="tahun_akademik">
+                                        <option selected>Pilih Tahun Akademik</option>
+                                        <option value="2019/2020">2019/2020</option>
+                                        <option value="2020/2021">2020/2021</option>
+                                        <option value="2021/2022">2021/2022</option>
+                                        <option value="2022/2023">2022/2023</option>
+                                    </select>
+                                    @error('tahun_akademik')
                                         <div class="text-danger mt-1">
                                             {{ $message }}
                                         </div>
@@ -87,7 +89,7 @@
                                         </div>
                                     @enderror
                                 </div>
-
+                                <div class="col-md-6 col-12"></div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-floating mt-1">
                                       <textarea
@@ -108,7 +110,6 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 col-12"></div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-floating mb-1 mt-1">
                                       <textarea

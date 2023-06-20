@@ -23,10 +23,10 @@ class DataController extends Controller
         $kelas = Kelas::all();
 
         if($request->nomor != null){
-            $siswa = Siswa::where('no_induk', $request->nomor)->get();
+            $siswa = Siswa::with('kelas')->where('no_induk', $request->nomor)->get();
                 return view('siswa_management.show_data_siswa', compact(['siswa', 'kelas']));
         }else{
-            $siswa = Siswa::all();
+            $siswa = Siswa::with('kelas')->get();
             return view('siswa_management.show_data_siswa', compact(['kelas', 'siswa']));
         }
     }

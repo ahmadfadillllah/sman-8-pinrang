@@ -20,6 +20,7 @@ class CreateNilaiTable extends Migration
             $table->foreignId('kode_guru')->nullable();
             $table->foreignId('kode_pelajaran')->nullable();
             $table->enum('semester', array('1(Ganjil)', '2(Genap)'));
+            $table->string('tahun_akademik')->nullable();
             $table->integer('nilai');
             $table->char('predikat', 1);
             $table->string('desk_pengetahuan')->nullable();

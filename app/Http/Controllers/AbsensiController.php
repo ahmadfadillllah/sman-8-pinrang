@@ -8,11 +8,16 @@ use App\Models\Kelas;
 use App\Models\Pertemuan;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AbsensiController extends Controller
 {
     public function showAbsen(){
-        $kelas = Kelas::all();
+        if(Auth::user()->role == 'Admin'){
+            $kelas = Kelas::all();
+        }else{
+            $kelas = Kelas::where('guru', Auth::user()->name)->get();
+        }
         return view('guru_management.show_absensi_siswa', compact('kelas'));
     }
 

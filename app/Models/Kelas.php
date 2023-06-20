@@ -18,7 +18,7 @@ class Kelas extends Model
     }
 
     public function siswa(){
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class, 'kode_kelas');
     }
 
     public function pertemuan(){
@@ -26,6 +26,6 @@ class Kelas extends Model
     }
 
     public function nilai(){
-        return $this->hasMany(Nilai::class);
+        return $this->hasMany(Nilai::class, 'kode_kelas');
     }
 }

@@ -41,9 +41,9 @@
                                         <form action="{{ route('show-data-siswa') }}" method="POST">
                                             @csrf
                                             <div class="modal-body">
-                                                <label>Nomor Induk: </label>
+                                                <label>Nomor Induk Siswa: </label>
                                                 <div class="mb-1">
-                                                    <input type="number" name="no_induk" value="{{old('no_induk')}}" placeholder="Masukkan Nomor Induk"
+                                                    <input type="number" name="no_induk" value="{{old('no_induk')}}" placeholder="Masukkan NIS"
                                                         class="form-control" />
                                                 </div>
                                                 @error('no_induk')
@@ -136,8 +136,9 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>NIK</th>
+                                    <th>NIS</th>
                                     <th>Nama</th>
+                                    <th>Kelas</th>
                                     <th>Nomor Telpon</th>
                                     <th>Alamat</th>
                                     <th>Tempat Lahir</th>
@@ -151,6 +152,7 @@
                                     <tr>
                                         <td>{{ $data->no_induk}}</td>
                                         <td>{{ $data->nama_siswa }}</td>
+                                        <td>{{ $data->kelas->kelas }}</td>
                                         <td>{{ $data->telp }}</td>
                                         <td>
                                             {{ $data->alamat }}

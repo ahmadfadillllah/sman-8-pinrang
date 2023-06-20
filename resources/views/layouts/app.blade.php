@@ -508,10 +508,27 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->role != 'WaliKelas')
-                    <li class=" navigation-header"><span data-i18n="User Interface">Siswa Management</span><i
-                            data-feather="more-horizontal"></i>
+                <li class=" navigation-header"><span data-i18n="User Interface">Siswa Management</span><i
+                    data-feather="more-horizontal"></i>
+                </li>
+                @if (Auth::user()->role == 'Siswa')
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                                data-feather="calendar"></i><span class="menu-title text-truncate"
+                                data-i18n="User">Jadwal
+                                Siswa</span></a>
+                        <ul class="menu-content">
+                            <li class="{{ request()->is('detail-jadwal-siswa*') ? 'active' : '' }}"><a
+                                    class="d-flex align-items-center" href="{{ route('detail-jadwal-siswa', Auth::user()->name) }}"><i
+                                        data-feather="circle"></i><span class="menu-item text-truncate"
+                                        data-i18n="List">Lihat Jadwal</span></a>
+                            </li>
                     </li>
+                    </ul>
+                    </li>
+                @endif
+
+
+                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
                     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                                 data-feather="calendar"></i><span class="menu-title text-truncate"
                                 data-i18n="User">Jadwal
@@ -524,15 +541,17 @@
                                             data-i18n="List">Input Jadwal</span></a>
                                 </li>
                             @endif
-                            <li class="{{ request()->is('show-jadwal/belajar*') ? 'active' : '' }}"><a
-                                    class="d-flex align-items-center" href="{{ route('show-jadwal-belajar') }}"><i
-                                        data-feather="circle"></i><span class="menu-item text-truncate"
-                                        data-i18n="List">Lihat Jadwal</span></a>
-                            </li>
+                            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
+                                <li class="{{ request()->is('show-jadwal/belajar*') ? 'active' : '' }}"><a
+                                        class="d-flex align-items-center" href="{{ route('show-jadwal-belajar') }}"><i
+                                            data-feather="circle"></i><span class="menu-item text-truncate"
+                                            data-i18n="List">Lihat Jadwal</span></a>
+                                </li>
+                            @endif
                     </li>
-            </ul>
-            </li>
-            @endif
+                    </ul>
+                    </li>
+                @endif
 
             @if (Auth::user()->role == 'Admin')
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
@@ -592,7 +611,7 @@
                 </ul>
                 </li>
             @endif
-            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru' || Auth::user()->role == 'Siswa')
+            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
                             data-feather="database"></i><span class="menu-title text-truncate" data-i18n="User">Data
                             Guru</span></a>
@@ -636,7 +655,7 @@
                         data-feather="message-square"></i><span class="menu-title text-truncate"
                         data-i18n="User">Chat Management</span></a>
                 <ul class="menu-content">
-                    <li class="{{ request()->is('chattas*') ? 'active' : '' }}"><a class="d-flex align-items-center"
+                    <li class="{{ request()->is('chat*') ? 'active' : '' }}"><a class="d-flex align-items-center"
                             href="/chat"><i data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="List">Lihat Chat</span></a>
                     </li>

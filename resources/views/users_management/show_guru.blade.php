@@ -46,10 +46,13 @@
                                   <form action="{{route('show-guru')}}" method="POST">
                                     @csrf
                                     <div class="modal-body">
-                                      <label>Nama: </label>
-                                      <div class="mb-1">
-                                        <input type="text" name="name" placeholder="Masukkan Nama" class="form-control" />
-                                      </div>
+                                        <label class="form-label" for="basicSelect">Nama:</label>
+                                        <select class="form-select mb-1" id="basicSelect" name="name">
+                                            <option selected>Pilih Nama</option>
+                                            @foreach ($guru as $g)
+                                            <option value="{{ $g->nama_guru }}">{{ $g->nama_guru }}</option>
+                                            @endforeach
+                                        </select>
 
                                       <label>Email: </label>
                                       <div class="mb-1">

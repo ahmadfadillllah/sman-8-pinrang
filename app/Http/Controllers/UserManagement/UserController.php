@@ -4,6 +4,8 @@ namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\MappingGuru;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,8 +19,9 @@ class UserController extends Controller
     // funtion for siswa
 
     public function showSiswa(){
+        $siswa = Siswa::all();
         $users = DB::table('users')->where('role' ,'=', 'Siswa')->get();
-        return view('users_management.show_siswa', compact('users'));
+        return view('users_management.show_siswa', compact('users', 'siswa'));
     }
 
     public function storeSiswa(Request $request){
@@ -66,7 +69,8 @@ class UserController extends Controller
 
     public function showGuru(){
         $users = DB::table('users')->whereIn('role' , ['Guru', 'WaliKelas'])->get();
-        return view('users_management.show_guru', compact('users'));
+        $guru = Guru::all();
+        return view('users_management.show_guru', compact('users', 'guru'));
     }
 
 
