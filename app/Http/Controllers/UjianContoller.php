@@ -138,6 +138,17 @@ class UjianContoller extends Controller
         return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
     }
 
+    public function showNilaiUjianSiswaName(Request $request, $name){
+
+        $siswa = Siswa::where('nama_siswa', $name)->first();
+
+        $kelas = Kelas::where('id', $siswa->kode_kelas)->first();
+
+        $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')->where('kode_kelas', $siswa->kode_kelas)->get()->sortBy('siswa.nama_siswa');
+
+        return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
+    }
+
     // ...
 
 }

@@ -6,11 +6,16 @@ use App\Models\Kelas;
 use App\Models\NilaiEkstrakurikuler;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EkstrakurikulerController extends Controller
 {
     public function inputNilai(){
-        $kelas = Kelas::all();
+        if(Auth::user()->role == 'Admin'){
+            $kelas = Kelas::all();
+        }else{
+            $kelas = Kelas::where('guru', Auth::user()->name)->get();
+        }
         return view('nilai_management.input_nilai_ekstrakurikuler', compact('kelas'));
     }
 

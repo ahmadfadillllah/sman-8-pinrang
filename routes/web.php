@@ -192,9 +192,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/show-nilai/lapor', [NilaiController::class, 'showNilaiLapor'])->name('show-nilai-lapor');
     Route::post('/show-nilai/lapor/siswa', [NilaiController::class, 'showNilaiLaporSiswa'])->name('show-nilai-lapor-siswa');
+    Route::get('/show-nilai/lapor/siswa-name/{name}', [NilaiController::class, 'showNilaiLaporSiswaName'])->name('show-nilai-lapor-siswa-name');
 
     Route::get('show-nilai/ujian', [UjianContoller::class, 'showNilaiUjian'])->name('show-nilai-ujian');
     Route::get('show-nilai/ujian/siswa/{id}', [UjianContoller::class, 'showNilaiUjianSiswa'])->name('show-nilai-ujian-siswa');
+    Route::get('show-nilai/ujian/siswa-name/{name}', [UjianContoller::class, 'showNilaiUjianSiswaName'])->name('show-nilai-ujian-siswa-name');
 });
 
 

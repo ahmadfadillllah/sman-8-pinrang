@@ -707,12 +707,21 @@
                                     Nilai Ujian</span></a>
                         </li>
                     @endif
+                    @if (Auth::user()->role != 'Siswa')
                     <li class="{{ request()->is('show-nilai/ujian*') ? 'active' : '' }}"><a
                             class="d-flex align-items-center" href="{{ route('show-nilai-ujian') }}"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="List">Lihat
                                 Nilai Ujian</span></a>
                     </li>
+                    @else
+                    <li class="{{ request()->is('show-nilai/ujian/siswa*') ? 'active' : '' }}"><a
+                        class="d-flex align-items-center" href="{{ route('show-nilai-ujian-siswa-name', Auth::user()->name) }}"><i
+                            data-feather="circle"></i><span class="menu-item text-truncate"
+                            data-i18n="List">Lihat
+                            Nilai Ujian</span></a>
+                    </li>
+                    @endif
             </li>
             </ul>
             </li>
@@ -765,11 +774,19 @@
                             data-feather="book"></i><span class="menu-title text-truncate" data-i18n="User">Nilai
                             Raport</span></a>
                     <ul class="menu-content">
+                        @if (Auth::user()->role != 'Siswa')
                         <li class="{{ request()->is('show-nilai/lapor*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="{{ route('show-nilai-lapor') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Lihat Raport</span></a>
                         </li>
+                        @else
+                        <li class="{{ request()->is('show-nilai/lapor/siswa-name*') ? 'active' : '' }}"><a
+                            class="d-flex align-items-center" href="{{ route('show-nilai-lapor-siswa-name', Auth::user()->name) }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="List">Lihat Raport</span></a>
+                        </li>
+                        @endif
                 </li>
                 </ul>
                 </li>

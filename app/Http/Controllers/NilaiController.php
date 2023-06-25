@@ -10,12 +10,17 @@ use App\Models\NilaiPrestasi;
 use App\Models\NilaiSikap;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NilaiController extends Controller
 {
     public function inputNilaiSikap()
     {
-        $kelas = Kelas::all();
+        if(Auth::user()->role == 'Admin'){
+            $kelas = Kelas::all();
+        }else{
+            $kelas = Kelas::where('guru', Auth::user()->name)->get();
+        }
         return view('nilai_management.nilai_sikap', compact('kelas'));
     }
 
@@ -96,5 +101,43 @@ class NilaiController extends Controller
 
 
         return view('nilai_management.components.nilai_lapor', compact(['nilai', 'title', 'nilaiSikapSpritual', 'nilaiSikapSosial', 'siswa', 'semester', 'absen', 'ekstrakurikuler', 'prestasi']));
+    }
+
+    public function showNilaiLaporSiswaName(Request $request, $name)
+    {
+
+        $siswa = Siswa::where('nama_siswa', $name)->first();
+        try {
+            $nilai = Nilai::where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
+
+            $nilaiSikapSpritual = NilaiSikap::where('kode_siswa', $siswa->id)->where('jenis_sikap', 'spritual')->where('semester', $request->semester)->get();
+
+            $nilaiSikapSosial = NilaiSikap::where('kode_siswa', $siswa->id)->where('jenis_sikap', 'sosial')->where('semester', $request->semester)->get();
+
+            $sakit = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 4)->count();
+
+            $izin = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 2)->count();
+
+            $bertugasKeluar = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 3)->count();
+
+            $terlambat = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 5)->count();
+
+            $tanpaKeterangan = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 6)->count();
+
+            $absen = array("sakit" => $sakit, "izin" => $izin, "bertugasKeluar" => $bertugasKeluar, "terlambat" => $terlambat, "tanpaKeterangan" => $tanpaKeterangan);
+
+            $ekstrakurikuler = NilaiEkstrakurikuler::where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
+
+            $prestasi = NilaiPrestasi::where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
+
+        } catch (\Throwable $th) {
+            return view('nilai_management.components.search_not_found');
+        }
+        $title = $siswa->nama_siswa;
+        $semester = $request->semester;
+
+
+
+        return view('nilai_management.components.nilai_lapor-siswa', compact(['nilai', 'title', 'nilaiSikapSpritual', 'nilaiSikapSosial', 'siswa', 'semester', 'absen', 'ekstrakurikuler', 'prestasi']));
     }
 }
