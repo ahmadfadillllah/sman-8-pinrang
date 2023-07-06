@@ -104,20 +104,75 @@ class UjianContoller extends Controller
             $predikat = 'D';
         }
 
-        Nilai::create([
-            'kode_siswa' => $request->kode_siswa,
-            'kode_kelas' => $id,
-            'kode_guru' => $request->kode_guru,
-            'kode_pelajaran' => $request->kode_pelajaran,
-            'semester' => $request->semester,
-            'tahun_akademik' => $request->tahun_akademik,
-            'nilai' => $request->nilai,
-            'predikat' => $predikat,
-            'desk_pengetahuan'  => $request->desk_pengetahuan,
-            'desk_keterampilan'  => $request->desk_keterampilan,
-        ]);
+        try {
+            Nilai::create([
+                'kode_siswa' => $request->kode_siswa,
+                'kode_kelas' => $id,
+                'kode_guru' => $request->kode_guru,
+                'kode_pelajaran' => $request->kode_pelajaran,
+                'semester' => $request->semester,
+                'tahun_akademik' => $request->tahun_akademik,
+                'nilai' => $request->nilai,
+                'tipe_ujian' => $request->tipe_ujian,
+                'predikat' => $predikat,
+                'desk_pengetahuan'  => $request->desk_pengetahuan,
+                'desk_keterampilan'  => $request->desk_keterampilan,
+            ]);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', 'Bukan akun guru');
+        }
+
 
         return redirect(route('detail-nilai-ujian', ['id' => $id]));
+    }
+
+    public function editdetailNilaiUjian($id){
+        $nilai = Nilai::whereId($id)->first();
+        $siswa = Siswa::where('id', $nilai->kode_siswa)->first();
+        $guru = Guru::all();
+        // $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
+        $pelajaran = Pelajaran::all();
+        $kode_kelas = $id;
+
+        return view('ujian_management.edit_detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas', 'nilai']));
+
+    }
+
+    public function editstoreNilaiUjian(Request $request, $id){
+        $request->validate([
+            'nilai' => ['required', 'max:3'],
+            'desk_pengetahuan' => ['required', 'max:255'],
+            'desk_keterampilan' => ['required', 'max:255'],
+        ]);
+
+        $nilai = $request->nilai;
+        if($nilai >= 92){
+            $predikat = 'A';
+        }
+        else if($nilai >= 83 && $nilai < 92){
+            $predikat = 'B';
+        }
+        else if($nilai >= 75 && $nilai < 83){
+            $predikat = 'C';
+
+        }
+        else if($nilai < 75){
+            $predikat = 'D';
+        }
+        try {
+            Nilai::where('id', $id)->update([
+                'nilai' => $request->nilai,
+                'predikat' => $predikat,
+                'desk_pengetahuan'  => $request->desk_pengetahuan,
+                'desk_keterampilan'  => $request->desk_keterampilan,
+            ]);
+            return redirect()->route('show-nilai-ujian')->with('success', 'Nilai berhasil diedit');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', 'Bukan akun guru');
+        }
+
+
+
     }
 
     public function showNilaiUjian(){
@@ -136,6 +191,27 @@ class UjianContoller extends Controller
         $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')->where('kode_kelas', $id)->get()->sortBy('siswa.nama_siswa');
 
         return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
+    }
+
+    public function showNilaiUjianSiswaDetail(Request $request, $id, $name){
+
+        $kelas = Kelas::where('id', $id)->first();
+
+        $siswa = Siswa::where('nama_siswa', $name)->first();
+
+        $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')
+        ->where('kode_kelas', $id)
+        ->where('kode_siswa', $siswa->id)->get()
+        ->sortBy('siswa.nama_siswa');
+
+        return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
+    }
+
+    public function destroyilaiUjianSiswa($id){
+        $jadwalUjian = Nilai::where('id', $id)->first();
+        $jadwalUjian->delete();
+
+        return redirect()->back()->with('success', 'Nilai berhasil dihapus');
     }
 
     public function showNilaiUjianSiswaName(Request $request, $name){

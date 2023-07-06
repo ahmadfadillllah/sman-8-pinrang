@@ -156,7 +156,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('input-nilai-ujian', [UjianContoller::class, 'inputNilaiUjian'])->name('input-nilai-ujian');
         Route::get('input-nilai-ujian/{id}/detail', [UjianContoller::class, 'detailNilaiUjian'])->name('detail-nilai-ujian');
-        Route::post('input-nilai-ujian/{id}/detail', [UjianContoller::class, 'storeNilaiUjian']);
+        Route::post('input-nilai-ujian/{id}/detailpost', [UjianContoller::class, 'storeNilaiUjian'])->name('detail-nilai-ujian-post');
+
+        Route::get('edit-nilai-ujian/{id}/detail', [UjianContoller::class, 'editdetailNilaiUjian'])->name('edit-detail-nilai-ujian');
+        Route::post('edit-nilai-ujian/{id}/detailpost', [UjianContoller::class, 'editstoreNilaiUjian'])->name('edit-detail-nilai-ujian-post');
 
         Route::get('/input-nilai/ekstrakurikuler', [EkstrakurikulerController::class, 'inputNilai'])->name('input-ekstrakurikuler');
         Route::get('/input-nilai/ekstrakurikuler/{id}/detail', [EkstrakurikulerController::class, 'detailNilai'])->name('detail-ekstrakurikuler');
@@ -196,7 +199,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('show-nilai/ujian', [UjianContoller::class, 'showNilaiUjian'])->name('show-nilai-ujian');
     Route::get('show-nilai/ujian/siswa/{id}', [UjianContoller::class, 'showNilaiUjianSiswa'])->name('show-nilai-ujian-siswa');
+    Route::delete('show-nilai/ujian/siswa/{id}', [UjianContoller::class, 'destroyilaiUjianSiswa'])->name('delete-nilai-ujian');
     Route::get('show-nilai/ujian/siswa-name/{name}', [UjianContoller::class, 'showNilaiUjianSiswaName'])->name('show-nilai-ujian-siswa-name');
+
+    Route::get('show-nilai/ujian/siswa-detail/{id}/{name}', [UjianContoller::class, 'showNilaiUjianSiswaDetail'])->name('show-nilai-ujian-siswa-detail');
 });
 
 

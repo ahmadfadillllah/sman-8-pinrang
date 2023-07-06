@@ -19,6 +19,7 @@ class Nilai extends Model
         'semester',
         'tahun_akademik',
         'nilai',
+        'tipe_ujian',
         'predikat',
         'desk_pengetahuan',
         'desk_keterampilan'

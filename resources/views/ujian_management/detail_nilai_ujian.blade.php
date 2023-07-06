@@ -10,7 +10,7 @@
                         <h4 class="card-title">Masukkan Nilai Ujian Siswa</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form" action="{{ route('detail-nilai-ujian', ['id' => $kode_kelas]) }}" method="POST">
+                        <form class="form" action="{{ route('detail-nilai-ujian-post', ['id' => $kode_kelas]) }}" method="POST">
                             @csrf
                             <input value="{{ Auth::user()->id }}" type="text" id="first-name"
                                             class="form-control" name="kode_guru"
@@ -46,22 +46,6 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 col-12">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basicSelect">Mata Pelajaran</label>
-                                        <select class="form-select" id="basicSelect" name="kode_pelajaran">
-                                            <option disabled selected>Pilih Mata Pelajaran</option>
-                                            @foreach ($pelajaran as $data)
-                                                <option value="{{ $data->id }}">{{ $data->mata_pelajaran }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('kode_pelajaran')
-                                        <div class="text-danger mt-1">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 col-12">
                                     <label class="form-label" for="fp-default">Pilih Tahun Akademik</label>
                                     <select class="form-select" id="basicSelect" name="tahun_akademik">
                                         <option selected>Pilih Tahun Akademik</option>
@@ -78,6 +62,23 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="mb-1">
+                                        <label class="form-label" for="basicSelect">Mata Pelajaran</label>
+                                        <select class="form-select" id="basicSelect" name="kode_pelajaran">
+                                            <option disabled selected>Pilih Mata Pelajaran</option>
+                                            @foreach ($pelajaran as $data)
+                                                <option value="{{ $data->id }}">{{ $data->mata_pelajaran }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('kode_pelajaran')
+                                        <div class="text-danger mt-1">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="mb-1">
                                         <label class="form-label" for="basicSelect">Nilai</label>
                                         <input value="{{ old('nilai') }}" type="number" id="first-name"
                                             class="form-control text-lowercase" name="nilai"
@@ -89,7 +90,20 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 col-12"></div>
+                                <div class="col-md-6 col-12">
+                                    <label class="form-label" for="fp-default">Pilih Tipe Ujian</label>
+                                    <select class="form-select" id="basicSelect" name="tipe_ujian">
+                                        <option disabled selected>Pilih Tipe Ujian</option>
+                                        <option value="Ulangan Harian">Ulangan Harian</option>
+                                        <option value="MID">MID</option>
+                                        <option value="UTS">UTS</option>
+                                    </select>
+                                    @error('tipe_ujian')
+                                        <div class="text-danger mt-1">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-floating mt-1">
                                       <textarea

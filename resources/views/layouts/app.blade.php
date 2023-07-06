@@ -699,14 +699,14 @@
                         data-feather="clipboard"></i><span class="menu-title text-truncate" data-i18n="User">Hasil
                         Ujian</span></a>
                 <ul class="menu-content">
-                    @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'WaliKelas' or Auth::user()->role == 'Guru')
+                    {{-- @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'WaliKelas' or Auth::user()->role == 'Guru')
                         <li class="{{ request()->is('input-nilai-ujian*') ? 'active' : '' }}"><a
                                 class="d-flex align-items-center" href="{{ route('input-nilai-ujian') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Input
                                     Nilai Ujian</span></a>
                         </li>
-                    @endif
+                    @endif --}}
                     @if (Auth::user()->role != 'Siswa')
                     <li class="{{ request()->is('show-nilai/ujian*') ? 'active' : '' }}"><a
                             class="d-flex align-items-center" href="{{ route('show-nilai-ujian') }}"><i

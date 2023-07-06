@@ -22,6 +22,7 @@ class CreateNilaiTable extends Migration
             $table->enum('semester', array('1(Ganjil)', '2(Genap)'));
             $table->string('tahun_akademik')->nullable();
             $table->integer('nilai');
+            $table->string('tipe_ujian')->nullable();
             $table->char('predikat', 1);
             $table->string('desk_pengetahuan')->nullable();
             $table->string('desk_keterampilan')->nullable();
