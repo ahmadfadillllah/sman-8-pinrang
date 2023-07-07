@@ -69,11 +69,11 @@ class UjianContoller extends Controller
     public function detailNilaiUjian($id){
         $siswa = Siswa::where('kode_kelas', $id)->get();
         $guru = Guru::all();
-        // $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
+        $select_guru = Guru::where('nama_guru', Auth::user()->name)->first();
         $pelajaran = Pelajaran::all();
         $kode_kelas = $id;
 
-        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas']));
+        return view('ujian_management.detail_nilai_ujian', compact(['siswa', 'guru', 'pelajaran', 'kode_kelas', 'select_guru']));
 
     }
 
@@ -119,11 +119,11 @@ class UjianContoller extends Controller
                 'desk_keterampilan'  => $request->desk_keterampilan,
             ]);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('info', 'Bukan akun guru');
+            return redirect()->back()->with('info', $th->getMessage());
         }
 
-
-        return redirect(route('detail-nilai-ujian', ['id' => $id]));
+        return redirect()->route('show-nilai-ujian-siswa', ['id' => $id])->with('success', 'Nilai ujian berhasil diinput');
+        // return redirect(route('show-nilai-ujian-siswa', ['id' => $id]));
     }
 
     public function editdetailNilaiUjian($id){
@@ -220,7 +220,7 @@ class UjianContoller extends Controller
 
         $kelas = Kelas::where('id', $siswa->kode_kelas)->first();
 
-        $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')->where('kode_kelas', $siswa->kode_kelas)->get()->sortBy('siswa.nama_siswa');
+        $nilai = Nilai::with('siswa', 'kelas', 'pelajaran')->where('kode_siswa', $siswa->id)->get()->sortBy('siswa.nama_siswa');
 
         return view('ujian_management.components.nilai_ujian', compact('nilai', 'kelas'));
     }

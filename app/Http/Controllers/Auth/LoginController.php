@@ -15,25 +15,30 @@ class LoginController extends Controller
     //     return view('auth.login');
     // }
 
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
+
 
     public function login(){
         return view('auth.login');
     }
 
     public function store(Request $request){
+
+        $input = $request->all();
         $attributes = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required'],
             'password' => ['required'],
         ]);
 
-
-        if(Auth::attempt($attributes)){
-                return redirect('/dashboard')->with('success', 'Selamat Datang..');
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'no_induk';
+        if(auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password'])))
+        {
+            return redirect('/dashboard')->with('success', 'Selamat Datang..');
+        }else{
+            return redirect()->route('login')->with('info','Email-Address And Password Are Wrong.');
         }
-
-
-        throw ValidationException::withMessages([
-            'email' => 'Email/password salah'
-        ]);
     }
 }

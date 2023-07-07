@@ -26,14 +26,17 @@ class UserController extends Controller
 
     public function storeSiswa(Request $request){
         $request->validate([
-            'name' => ['required',  'min:3'],
+            'name' => ['required',  'min:3', 'unique:users'],
             'email' => ['required', 'unique:users' , 'email'],
             'password' => ['required', 'min:8'],
         ]);
 
+        $siswa = Siswa::where('nama_siswa', $request->name)->first();
+
         $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'no_induk' => $siswa->no_induk,
                 'role' => $request->role,
                 'password' => Hash::make($request->password),
                 'avatar' => 'user.png',
@@ -76,7 +79,7 @@ class UserController extends Controller
 
     public function storeGuru(Request $request){
         $request->validate([
-            'name' => ['required',  'min:3'],
+            'name' => ['required',  'min:3', 'unique:users'],
             'email' => ['required', 'unique:users' , 'email'],
             'role' => ['required'],
             'password' => ['required', 'min:8'],
@@ -123,7 +126,7 @@ class UserController extends Controller
         if($user->role == "Guru"){
             return redirect('show-guru')->with('success', 'Guru telah dihapus');
         }else{
-            return redirect('show-siswa')->with('success', 'Guru telah dihapus');
+            return redirect('show-siswa')->with('success', 'Siswa telah dihapus');
         }
     }
 
@@ -145,12 +148,36 @@ class UserController extends Controller
             'email' => ['required' , 'email'],
         ]);
 
+        $user = User::whereId(Auth::user()->id)->first();
 
-        User::where('id', Auth::user()->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make(Auth::user()->password),
-        ]);
+        if($user->role == 'Siswa'){
+            Siswa::where('nama_siswa', $user->name)->update([
+                'nama_siswa' => $request->name,
+            ]);
+
+            User::where('id', Auth::user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+        }
+
+        if($user->role == 'Guru'){
+            Guru::where('nama_guru', $user->name)->update([
+                'nama_guru' => $request->name,
+            ]);
+
+            User::where('id', Auth::user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+        }
+
+        if($user->role == 'Admin'){
+            User::where('id', Auth::user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+        }
 
         return redirect("show-profile")->with('success', 'Profile telah diupdate');
     }

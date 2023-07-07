@@ -30,15 +30,20 @@
                                 <h2 class="card-title fw-bold mb-1">Silahkan Masuk!</h2>
                                 <form class="auth-register-form mt-2" action="{{ route('login') }}" method="POST">
                                     @csrf
+                                    @if ($errors->has('no_induk') || $errors->has('email'))
+                                    <div class="text-danger mt-1">
+                                        {{ $message }}
+                                    </div>
+                                    @endif
                                     @error('email')
                                     <div class="text-danger mt-1">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                     <div class="mb-1">
-                                        <label class="form-label" for="email">Email</label>
-                                        <input class="form-control" id="email" type="text" name="email"
-                                            placeholder="asep@example.com" aria-describedby="email" tabindex="2" value="{{old('email')}}"/>
+                                        <label class="form-label" for="email">Email / No Induk</label>
+                                        <input class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" id="email" type="text" name="email"
+                                        aria-describedby="email" tabindex="2" value="{{ old('no_induk') ?: old('email') }}"/>
 
                                     </div>
                                     <div class="mb-4">

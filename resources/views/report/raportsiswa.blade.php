@@ -1,6 +1,4 @@
-@extends('nilai_management.show_nilai_lapor-siswa')
-
-
+@extends('nilai_management.show_nilai_lapor-siswa-report')
 @section('component')
     <section class="app-user-list">
         <div class="row" id="basic-table">
@@ -31,12 +29,7 @@
                             </table>
                         </div>
 
-                        <div class="col-xl-2 p-0 mt-xl-0 mt-2">
-                            <button class="btn btn-primary">
-                                <a href="{{ route('show-nilai-lapor-siswa-name-report', ['name' => $siswa->nama_siswa, 'semester' => $semester]) }}" target="_blank" rel="noopener noreferrer" style="color:white">
-                                Download Raport
-                                </a>
-                            </button>
+                        <div class="col-xl-2 p-0 mt-xl-0 mt-2" style="float: right">
                             <table>
                                 <tbody>
                                     <tr>

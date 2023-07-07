@@ -31,6 +31,7 @@
                                     <th>Semester</th>
                                     <th>Nama</th>
                                     <th>NIS</th>
+                                    <th>Jenis Ujian</th>
                                     <th>Nilai</th>
                                     <th>Predikat</th>
                                     @if (Auth::user()->role != 'Siswa')
@@ -46,6 +47,7 @@
                                         <td>{{ $data->semester }}</td>
                                         <td>{{ $data->siswa->nama_siswa }}</td>
                                         <td>{{ $data->siswa->no_induk }}</td>
+                                        <td>{{ $data->tipe_ujian }}</td>
                                         <td>{{ $data->nilai }}</td>
                                         <td>{{ $data->predikat }}</td>
                                         @if (Auth::user()->role != 'Siswa')
