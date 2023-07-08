@@ -175,7 +175,7 @@ class UjianContoller extends Controller
 
     }
 
-    public function showNilaiUjian(){
+public function showNilaiUjian(){
         if(Auth::user()->role == 'Admin'){
             $kelas = Kelas::all();
         }else{

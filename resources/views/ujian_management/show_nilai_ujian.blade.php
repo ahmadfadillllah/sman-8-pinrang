@@ -28,7 +28,7 @@
                                         <td>{{ $no }}</td>
                                         <td>{{ $data->kelas }}</td>
                                         <td>
-                                            @if (Auth::user()->role == 'Admin')
+                                            @if (Auth::user()->role == 'Siswa')
                                             <a  href="{{ route('show-nilai-ujian-siswa-detail', ['id'=> $data->id, 'name'=> Auth::user()->name]) }}">
                                                 <i data-feather="eye" class="me-50"></i>
                                                 <span>Lihat</span>
