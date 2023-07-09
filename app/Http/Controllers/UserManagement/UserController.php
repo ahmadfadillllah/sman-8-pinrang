@@ -27,7 +27,7 @@ class UserController extends Controller
     public function storeSiswa(Request $request){
         $request->validate([
             'name' => ['required',  'min:3', 'unique:users'],
-            'email' => ['required', 'unique:users' , 'email'],
+            // 'email' => ['required', 'unique:users' , 'email'],
             'password' => ['required', 'min:8'],
         ]);
 
@@ -88,7 +88,7 @@ class UserController extends Controller
         $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'role' => $request->role,
+                'role' => 'Guru',
                 'password' => Hash::make($request->password),
                 'avatar' => 'user.png',
             ]);

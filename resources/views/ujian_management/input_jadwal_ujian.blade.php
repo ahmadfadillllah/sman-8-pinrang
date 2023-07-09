@@ -77,7 +77,20 @@
                                     </div>
                                    @enderror
                                 </div>
-
+                                <div class="col-md-6 col-12">
+                                    <label class="form-label" for="fp-default">Pilih Tipe Ujian</label>
+                                    <select class="form-select" id="basicSelect" name="tipe_ujian">
+                                        <option disabled selected>Pilih Tipe Ujian</option>
+                                        <option value="Ulangan Harian">Ulangan Harian</option>
+                                        <option value="MID">MID</option>
+                                        <option value="UTS">UTS</option>
+                                    </select>
+                                    @error('tipe_ujian')
+                                        <div class="text-danger mt-1">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-center mt-1">
                                     <button type="submit" class="btn btn-primary me-1">Submit</button>
                                     <button type="reset" class="btn btn-outline-secondary">Reset</button>

@@ -19,6 +19,7 @@ class CreateJadwalUjianTable extends Migration
             $table->foreignId('kode_hari')->nullable();
             $table->string('jam');
             $table->foreignId('kode_pelajaran')->nullable();
+            $table->foreignId('tipe_ujian')->nullable();
             $table->timestamps();
         });
 

@@ -75,6 +75,9 @@ class NilaiController extends Controller
             $nilaiSikapSpritual = NilaiSikap::where('kode_siswa', $siswa->id)->where('jenis_sikap', 'spritual')->where('semester', $request->semester)->get();
 
             $nilaiSikapSosial = NilaiSikap::where('kode_siswa', $siswa->id)->where('jenis_sikap', 'sosial')->where('semester', $request->semester)->get();
+            $nilaiHarian = Nilai::where('tipe_ujian', 'Ulangan Harian')->where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
+            $nilaiUTS = Nilai::where('tipe_ujian', 'UTS')->where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
+            $nilaiUAS = Nilai::where('tipe_ujian', 'UAS')->where('kode_siswa', $siswa->id)->where('semester', $request->semester)->get();
 
             $sakit = AbsensiSiswa::where('kode_siswa', $siswa->id)->where('kode_kehadiran', 4)->count();
 
@@ -100,7 +103,7 @@ class NilaiController extends Controller
 
 
 
-        return view('nilai_management.components.nilai_lapor', compact(['nilai', 'title', 'nilaiSikapSpritual', 'nilaiSikapSosial', 'siswa', 'semester', 'absen', 'ekstrakurikuler', 'prestasi']));
+        return view('nilai_management.components.nilai_lapor', compact(['nilaiHarian','nilaiUTS','nilaiUAS','nilai', 'title', 'nilaiSikapSpritual', 'nilaiSikapSosial', 'siswa', 'semester', 'absen', 'ekstrakurikuler', 'prestasi']));
     }
 
     public function showNilaiLaporSiswaNameGanjil(Request $request, $name, $semesterr)

@@ -34,15 +34,22 @@ class UjianContoller extends Controller
             'jamStart' => ['required'],
             'jamEnd' => ['required'],
             'matapelajaran' => ['required'],
+            'tipe_ujian' => ['required'],
         ]);
 
         $jam = "$request->jamStart - $request->jamEnd";
-        JadwalUjian::create([
-            'tanggal' => $request->tanggal,
-            'kode_hari' => $request->hari,
-            'jam' => $jam,
-            'kode_pelajaran' => $request->matapelajaran,
-        ]);
+        try {
+            JadwalUjian::create([
+                'tanggal' => $request->tanggal,
+                'kode_hari' => $request->hari,
+                'jam' => $jam,
+                'kode_pelajaran' => $request->matapelajaran,
+                'tipe_ujian' => $request->tipe_ujian,
+            ]);
+            return redirect()->route('show-ujian')->with('success', 'Jadwal ujian telah ditambahkan');
+        } catch (\Throwable $th) {
+            return redirect()->route('show-ujian')->with('info', 'Jadwal ujian gagal ditambahkan');
+        }
 
         return redirect('input-ujian');
     }

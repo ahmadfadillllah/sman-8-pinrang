@@ -19,6 +19,7 @@
                                     <th>Tanggal</th>
                                     <th>Jam</th>
                                     <th>Mata Ujian</th>
+                                    <th>Jenis Ujian</th>
                                     @if (Auth::user()->role == 'Admin')
 
                                     <th>Aksi</th>
@@ -36,6 +37,7 @@
                                         <td>{{ $data->tanggal }}</td>
                                         <td>{{ $data->jam }}</td>
                                         <td>{{ $data->pelajaran->mata_pelajaran }}</td>
+                                        <td>{{ $data->tipe_ujian }}</td>
 
                                     @if (Auth::user()->role == 'Admin')
                                         <td>

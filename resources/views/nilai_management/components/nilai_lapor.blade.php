@@ -8,6 +8,7 @@
                 <div class="card-body invoice-padding pt-0">
                     <div class="row invoice-spacing ">
                         <div class="col-xl-10 p-0">
+
                             <table>
                                 <tbody>
                                     <tr>
@@ -29,6 +30,7 @@
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="col-xl-2 p-0 mt-xl-0 mt-2">
                             <button class="btn btn-primary">
                                 <a href="{{ route('show-nilai-lapor-siswa-name-report', ['name' => $siswa->nama_siswa, 'semester' => $semester]) }}" target="_blank" rel="noopener noreferrer" style="color:white">
@@ -100,7 +102,81 @@
                     </div>
 
                 </div>
-                <h4 class="mt-2 mb-1">B. PENGETAHUAN</h4>
+                <h4 class="mt-2 mb-1">B. NILAI UJIAN</h4>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">1. Nilai Harian</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Predikat</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($nilaiHarian as $data)
+                                    <tr>
+                                        <td>{{ $data->nilai }}</td>
+                                        <td>{{ $data->predikat }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">2. Nilai MID</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Predikat</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($nilaiUTS as $data)
+                                    <tr>
+                                        <td>{{ $data->nilai }}</td>
+                                        <td>{{ $data->predikat }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">3. Nilai UAS</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Predikat</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($nilaiUAS as $data)
+                                    <tr>
+                                        <td>{{ $data->nilai }}</td>
+                                        <td>{{ $data->predikat }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <h4 class="mt-2 mb-1">C. PENGETAHUAN</h4>
                 <P class="mt-2 mb-1">Kriteria Ketuntasan Minimal = 75</P>
                 <div class="card">
                     <div class="card-header">
@@ -138,7 +214,7 @@
                     </div>
 
                 </div>
-                <h4 class="mt-2 mb-1">C. KETERAMPILAN</h4>
+                <h4 class="mt-2 mb-1">D. KETERAMPILAN</h4>
                 <P class="mt-2 mb-1">Kriteria Ketuntasan Minimal = 75</P>
                 <div class="card">
                     <div class="card-header">
@@ -176,7 +252,7 @@
                     </div>
 
                 </div>
-                <h4 class="mt-2 mb-1">D. EKSTRAKURIKULER</h4>
+                <h4 class="mt-2 mb-1">E. EKSTRAKURIKULER</h4>
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Nilai Ekstrakurikuler</h4>
@@ -211,7 +287,7 @@
                     </div>
 
                 </div>
-                <h4 class="mt-2 mb-1">E. PRESTASI</h4>
+                <h4 class="mt-2 mb-1">F. PRESTASI</h4>
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Prestasi Siswa</h4>
@@ -244,10 +320,10 @@
                     </div>
 
                 </div>
-                <h4 class="mt-2 mb-1">F. KETIDAKHADIRAN</h4>
+                <h4 class="mt-2 mb-1">G. KETIDAKHADIRAN</h4>
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Ketidakhadiran Siswa</h4>
+                        <h4 class="card-title">Prestasi Siswa</h4>
                     </div>
                     <div class="table-responsive">
                         <table class="table">
