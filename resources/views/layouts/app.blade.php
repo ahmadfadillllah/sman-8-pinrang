@@ -611,7 +611,7 @@
                 </ul>
                 </li>
             @endif
-            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
+            @if (Auth::user()->role == 'Admin')
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
                             data-feather="database"></i><span class="menu-title text-truncate" data-i18n="User">Data
                             Guru</span></a>
