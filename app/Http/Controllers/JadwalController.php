@@ -153,6 +153,22 @@ class JadwalController extends Controller
         return view('guru_management.components.jadwal_mengajar', compact('jadwal', 'title'));
     }
 
+    public function showJadwalGuruName(Request $request, $name)
+    {
+        $guru = Guru::where('nama_guru', $name)->first();
+
+        try {
+            $jadwal = Jadwal::where('kode_guru', $guru->id)->get();
+        } catch (\Throwable $th) {
+           return view('guru_management.components.search_not_found');
+        }
+
+        $title = $guru->nama_guru;
+
+
+        return view('guru_management.components.jadwal_mengajar_guru', compact('jadwal', 'title'));
+    }
+
     public function destroy($id){
         $jadwal = Jadwal::where('id', $id)->first();
         $jadwal->delete();

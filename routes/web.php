@@ -135,6 +135,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show-jadwal/mengajar', [JadwalController::class, 'showJadwalMengajar'])->name('show-jadwal-mengajar');
 
         Route::get('/show-jadwal/guru', [JadwalController::class, 'showJadwalGuru'])->name('show-jadwal-guru');
+        Route::get('/show-jadwal/guru/{name}', [JadwalController::class, 'showJadwalGuruName'])->name('show-jadwal-guru-name');
 
         Route::get('/show-absensi-siswa', [AbsensiController::class, 'showAbsen'])->name('show-absensi-siswa');
         Route::get('/show-absensi-siswa/{id}/detail', [AbsensiController::class, 'detailAbsen'])->name('detail-absen');

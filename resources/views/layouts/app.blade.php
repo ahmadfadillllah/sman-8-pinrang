@@ -590,12 +590,22 @@
                             data-i18n="User">Jadwal
                             Mengajar</span></a>
                     <ul class="menu-content">
+                        @if (Auth::user()->role != 'Guru')
                         <li class="{{ request()->is('show-jadwal/mengajar*') ? 'active' : '' }}"><a
-                                class="d-flex align-items-center" href="{{ route('show-jadwal-mengajar') }}"><i
+                            class="d-flex align-items-center" href="{{ route('show-jadwal-mengajar') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="List">Lihat
+                                Jadwal</span></a>
+                        </li>
+                        @else
+                            <li class="{{ request()->is('show-jadwal/guru*') ? 'active' : '' }}"><a
+                                class="d-flex align-items-center" href="{{ route('show-jadwal-guru-name', Auth::user()->name ) }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate"
                                     data-i18n="List">Lihat
                                     Jadwal</span></a>
                         </li>
+                        @endif
+
                 </li>
                 </ul>
                 <li class=" nav-item"><a class="d-flex align-items-center mt-1" href="#"><i
@@ -651,26 +661,19 @@
                 </li>
             @endif
 
+            @if (Auth::user()->role != 'Admin')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                        data-feather="message-square"></i><span class="menu-title text-truncate"
-                        data-i18n="User">Chat Management</span></a>
+                data-feather="message-square"></i><span class="menu-title text-truncate"
+                data-i18n="User">Chat Management</span></a>
                 <ul class="menu-content">
                     <li class="{{ request()->is('chat*') ? 'active' : '' }}"><a class="d-flex align-items-center"
                             href="/chat"><i data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="List">Lihat Chat</span></a>
                     </li>
-                    {{-- <li class="{{ request()->is('group/create*') ? 'active' : '' }}"><a
-                                class="d-flex align-items-center" href="/group/create"><i
-                                    data-feather="circle"></i><span class="menu-item text-truncate"
-                                    data-i18n="List">Buat Grub Chat</span></a>
-                        </li>
-                        <li class="{{ request()->is('subscribe*') ? 'active' : '' }}"><a
-                                class="d-flex align-items-center" href="{{ route('subscribe') }}"><i
-                                    data-feather="circle"></i><span class="menu-item text-truncate"
-                                    data-i18n="List">Gabung Grub Chat</span></a>
-                        </li> --}}
+                </ul>
             </li>
-            </ul>
+            @endif
+
             </li>
             <li class=" navigation-header"><span data-i18n="User Interface">Ujian Management</span><i
                     data-feather="more-horizontal"></i>
