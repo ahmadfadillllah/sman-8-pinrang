@@ -96,7 +96,7 @@
                                         <option disabled selected>Pilih Tipe Ujian</option>
                                         <option value="Ulangan Harian">Ulangan Harian</option>
                                         <option value="MID">MID</option>
-                                        <option value="UTS">UTS</option>
+                                        <option value="UAS">UAS</option>
                                     </select>
                                     @error('tipe_ujian')
                                         <div class="text-danger mt-1">
