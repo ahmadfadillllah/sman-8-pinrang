@@ -148,6 +148,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/input-ujian', [UjianContoller::class, 'inputUjian'])->name('input-ujian');
         Route::post('/input-ujian', [UjianContoller::class, 'storeJadwalUjian'])->name('input-ujian');
+        Route::get('/edit-ujian/{id}', [UjianContoller::class, 'editUjian'])->name('edit-ujian');
+        Route::post('/edit-ujian/{id}', [UjianContoller::class, 'storeEditUjian'])->name('edit-ujian');
 
         Route::delete('/show-ujian/{id}', [UjianContoller::class, 'destroy'])->name('delete-ujian');
 

@@ -20,7 +20,7 @@
                                     <th>Jam</th>
                                     <th>Mata Ujian</th>
                                     <th>Jenis Ujian</th>
-                                    @if (Auth::user()->role == 'Admin')
+                                    @if (Auth::user()->role == 'Admin' or Auth::user()->role == 'Guru')
 
                                     <th>Aksi</th>
                                     @endif
@@ -39,8 +39,18 @@
                                         <td>{{ $data->pelajaran->mata_pelajaran }}</td>
                                         <td>{{ $data->tipe_ujian }}</td>
 
-                                    @if (Auth::user()->role == 'Admin')
+                                    @if (Auth::user()->role == 'Admin' or Auth::user()->role == 'Guru')
                                         <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                    <i data-feather="more-vertical"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ route('edit-ujian', ['id'=>$data->id]) }}">
+                                                        <i data-feather="edit-2" class="me-50"></i>
+                                                        <span>Edit</span>
+                                                    </a>
                                                     <form action="{{ route('delete-ujian', ['id'=>$data->id]) }}" method="POST">
                                                         @method('delete')
                                                         @csrf
@@ -49,6 +59,8 @@
                                                             <span>Delete</span>
                                                         </button>
                                                     </form>
+                                                </div>
+                                            </div>
                                         </td>
                                         @endif
                                     </tr>

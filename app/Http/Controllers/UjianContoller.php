@@ -27,6 +27,14 @@ class UjianContoller extends Controller
         return view('ujian_management.input_jadwal_ujian', compact(['hari', 'pelajaran']));
     }
 
+    public function editUjian($id)
+    {
+        $jadwalUjian = JadwalUjian::with('hari', 'pelajaran')->whereId($id)->orderBy('tanggal', 'asc')->first();
+        $hari = Hari::all();
+        $pelajaran = Pelajaran::all();
+        return view('ujian_management.edit_jadwal_ujian', compact(['hari', 'pelajaran', 'jadwalUjian']));
+    }
+
     public function storeJadwalUjian(Request $request){
         $request->validate([
             'tanggal' => ['required'],
@@ -54,11 +62,38 @@ class UjianContoller extends Controller
         return redirect('input-ujian');
     }
 
+    public function storeEditUjian(Request $request, $id){
+        $request->validate([
+            'tanggal' => ['required'],
+            'hari' => ['required'],
+            'jamStart' => ['required'],
+            'jamEnd' => ['required'],
+            'matapelajaran' => ['required'],
+            'tipe_ujian' => ['required'],
+        ]);
+
+        $jam = "$request->jamStart - $request->jamEnd";
+        try {
+            JadwalUjian::where('id', $id)->update([
+                'tanggal' => $request->tanggal,
+                'kode_hari' => $request->hari,
+                'jam' => $jam,
+                'kode_pelajaran' => $request->matapelajaran,
+                'tipe_ujian' => $request->tipe_ujian,
+            ]);
+            return redirect()->route('show-ujian')->with('success', 'Jadwal ujian telah diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->route('show-ujian')->with('info', 'Jadwal ujian gagal diupdate');
+        }
+
+        return redirect('input-ujian');
+    }
+
     public function destroy($id){
         $jadwalUjian = JadwalUjian::where('id', $id)->first();
         $jadwalUjian->delete();
 
-        return redirect('show-ujian');
+        return redirect()->route('show-ujian')->with('success', 'Jadwal ujian telah dihapus');
     }
 
 
